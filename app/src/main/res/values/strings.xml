@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">msm</string>
+    <string name="app_name">Masket Section Manager</string>
+    <string name="no_num_warning">Campo Número Vazio!</string>
+    <string name="no_password_warning">Campo Password Vazio!</string>
 </resources>
