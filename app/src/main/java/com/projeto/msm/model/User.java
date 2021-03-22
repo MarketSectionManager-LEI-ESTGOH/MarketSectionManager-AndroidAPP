@@ -31,8 +31,28 @@ public class User {
         return (this.nome);
     }
 
+    public String getEmail(){
+        return (this.email);
+    }
+
+    public int getnumInterno(){
+        return (this.num_interno);
+    }
+
+    public boolean getTipo(){
+        return (this.tipo);
+    }
+
+    public int getId(){
+        return (this.id);
+    }
+
     public void setNum(int num_interno){
         this.num_interno = num_interno;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public void setPassword(String password){
