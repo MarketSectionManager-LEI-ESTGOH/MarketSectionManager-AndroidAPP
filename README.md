@@ -1,7 +1,7 @@
 # MarketSectionManager
 ![Image description](https://github.com/MarketSectionManager-LEI-ESTGOH/MarketSectionManager-AndroidAPP/blob/main/logo.jpg)
 
-With this project we pretend to simplify the mandatory registers that are needed to the retail industry. This project has a varietty of technologies on its total, but for the end users are provided two platforms: an Desktop Application and an Android Application. The Desktop Application is meant to the Administrators of the system and the Android one is for the employees that, on every part of the stores can register and manage the registers.
+With this project we pretend to simplify the mandatory registers that are needed to the retail industry. This project has a variety of technologies on it's total, but for the end users are provided two platforms: a Desktop Application and an Android Application. The Desktop Application is meant for the Administrators of the system and the Android one is for the employees that, on every part of the stores can register and manage the registers.
 
 This repository, has only the Android Part of the System.
 
