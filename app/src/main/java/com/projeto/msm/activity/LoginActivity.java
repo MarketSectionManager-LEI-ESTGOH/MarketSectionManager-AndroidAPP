@@ -2,6 +2,7 @@ package com.projeto.msm.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.auth0.android.jwt.JWT;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
@@ -43,17 +45,13 @@ public class LoginActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         inicializarComponentes();
-
         progessBarLogin.setVisibility(View.GONE);
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(!isEmpty(textFieldNumero)){
                     if(!isEmpty(textFieldPassword)){
-                        current_user = new User();
-                        current_user.setNum(Integer.parseInt(textFieldNumero.getText().toString()));
-                        current_user.setPassword(textFieldPassword.getText().toString());
-                        validarLogin(current_user);
+                        validarLogin();
                     }else{
                         Toast.makeText(LoginActivity.this, getString(R.string.no_password_warning), Toast.LENGTH_SHORT).show();
                     }
@@ -75,8 +73,14 @@ public class LoginActivity extends AppCompatActivity{
         return myeditText.getText().toString().trim().length() == 0;
     }
 
-    private void validarLogin(User user_a_validar){
+    private void validarLogin(){
+        //Create current user
+        current_user = new User();
+        current_user.setNum(Integer.parseInt(textFieldNumero.getText().toString()));
+        current_user.setPassword(textFieldPassword.getText().toString());
+        //Set bar visible
         progessBarLogin.setVisibility(View.VISIBLE);
+        //Retrofit request
         Gson gson = new GsonBuilder()
                 .setLenient()
                 .create();
@@ -84,25 +88,45 @@ public class LoginActivity extends AppCompatActivity{
         APICall apiInterface = retrofit.create(APICall.class);
         try {
             JSONObject paramObject = new JSONObject();
-            paramObject.put("num_interno", String.valueOf(user_a_validar.getnumInterno()));
-            paramObject.put("password", user_a_validar.getPassword());
-            Log.e("HERE", paramObject.toString());
+            paramObject.put("num_interno", String.valueOf(current_user.getnumInterno()));
+            paramObject.put("password", current_user.getPassword());
             Call<String> userCall = apiInterface.login(paramObject.toString());
             userCall.enqueue(new Callback<String>() {
                 @Override
                 public void onResponse(Call<String> call, Response<String> response) {
-                    try{
-
-                        Log.e(" Full json gson => ", response.body());
-                    }catch (Exception e){
-                        e.printStackTrace();
+                    if (response.isSuccessful()) {
+                        try{
+                            Log.e(" Full json gson => ", response.body());
+                            String div[] = response.body().split("\"");
+                            current_user.setToken(div[7]);
+                            progessBarLogin.setVisibility(View.GONE);
+                            //TODO:Update user info;
+                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            finish();
+                        }catch (NullPointerException npe){
+                            npe.printStackTrace();
+                            progessBarLogin.setVisibility(View.GONE);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                            progessBarLogin.setVisibility(View.GONE);
+                        }
+                    }else{
+                        try {
+                            progessBarLogin.setVisibility(View.GONE);
+                            Toast.makeText(LoginActivity.this, getString(R.string.login_error), Toast.LENGTH_SHORT).show();
+                        } catch (Exception e) {
+                            Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
                     }
 
-                }
 
+                }
                 @Override
                 public void onFailure(Call<String> call, Throwable t) {
                     Log.e("Tag", "error" + t.toString());
+                    Toast.makeText(LoginActivity.this, getString(R.string.server_error), Toast.LENGTH_SHORT).show();
+                    progessBarLogin.setVisibility(View.GONE);
+                    //TODO: Reset activity?;
                 }
             });
         } catch (JSONException e) {

@@ -9,6 +9,7 @@ public class User {
     //private BigInteger id;
     private String password;
     private int id;
+    private String token;
 
     public User(){
         this.id = -1;
@@ -17,6 +18,7 @@ public class User {
         this.tipo = false;
         this.nome = null;
         this.password = null;
+        this.token = null;
     }
 
     public User(int id, String email, String nome, int num_interno, boolean tipo){
@@ -57,5 +59,13 @@ public class User {
 
     public void setPassword(String password){
         this.password = password;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }
