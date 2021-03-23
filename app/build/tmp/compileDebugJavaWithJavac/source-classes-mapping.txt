@@ -1,0 +1,16 @@
+com/projeto/msm/adapter/RetroClass.java
+ com.projeto.msm.adapter.RetroClass
+com/projeto/msm/model/User.java
+ com.projeto.msm.model.User
+com/projeto/msm/model/JWTToken.java
+ com.projeto.msm.model.JWTToken
+com/projeto/msm/activity/MainActivity.java
+ com.projeto.msm.activity.MainActivity
+com/projeto/msm/BuildConfig.java
+ com.projeto.msm.BuildConfig
+com/projeto/msm/adapter/APICall.java
+ com.projeto.msm.adapter.APICall
+com/projeto/msm/activity/LoginActivity.java
+ com.projeto.msm.activity.LoginActivity
+ com.projeto.msm.activity.LoginActivity$1
+ com.projeto.msm.activity.LoginActivity$2
