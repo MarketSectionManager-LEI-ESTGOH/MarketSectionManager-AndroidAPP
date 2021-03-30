@@ -7,6 +7,8 @@ This repository, has only the Android Part of the System.
 
 ## Built With
 * [Java](https://www.java.com/en/)
+* [JavaFX](https://www.oracle.com/java/technologies/javase/javafx-overview.html)
+* [CSS](https://www.w3schools.com/css/default.asp)
 * [Android Studio](https://developer.android.com/studio)
 * [PHP](https://www.php.net/)
 * [MySQL](https://www.mysql.com/)
