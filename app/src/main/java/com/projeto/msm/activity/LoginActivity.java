@@ -90,6 +90,7 @@ public class LoginActivity extends AppCompatActivity{
             JSONObject paramObject = new JSONObject();
             paramObject.put("num_interno", String.valueOf(current_user.getnumInterno()));
             paramObject.put("password", current_user.getPassword());
+            Log.e(" Infor => ", String.valueOf(current_user.getnumInterno())+" "+ current_user.getPassword());
             Call<String> userCall = apiInterface.login(paramObject.toString());
             userCall.enqueue(new Callback<String>() {
                 @Override
@@ -100,8 +101,10 @@ public class LoginActivity extends AppCompatActivity{
                             String div[] = response.body().split("\"");
                             current_user.setToken(div[7]);
                             progessBarLogin.setVisibility(View.GONE);
+
                             //TODO:Update user info;
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+
+                            startActivity(new Intent(getApplicationContext(), MainActivity.class).putExtra("user", current_user));
                             finish();
                         }catch (NullPointerException npe){
                             npe.printStackTrace();

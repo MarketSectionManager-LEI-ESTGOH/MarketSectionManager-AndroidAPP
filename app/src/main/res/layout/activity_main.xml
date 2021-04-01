@@ -17,13 +17,13 @@
             layout="@layout/main_toolbar"/>
 
         <TextView
+            android:id="@+id/homeText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Home"
+            android:gravity="center"
+            android:text=""
             android:textSize="50sp"
-            android:textStyle="bold"
-            android:gravity="center">
-        </TextView>
+            android:textStyle="bold"></TextView>
 
     </LinearLayout>
 

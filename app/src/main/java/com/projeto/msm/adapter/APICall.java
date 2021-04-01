@@ -18,6 +18,6 @@ public interface APICall {
     String Base_URL ="http://msm.hopto.org";
 
     @Headers("Content-Type: application/json")
-    @POST("/MSMAPI/api/login.php")
+    @POST("/login")
     Call<String> login(@Body String body);
 }
