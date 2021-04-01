@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.projeto.msm.R;
 import com.projeto.msm.model.User;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivityAdmin extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
 
@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_admin);
 
         drawerLayout = findViewById(R.id.drawer_layout);
 

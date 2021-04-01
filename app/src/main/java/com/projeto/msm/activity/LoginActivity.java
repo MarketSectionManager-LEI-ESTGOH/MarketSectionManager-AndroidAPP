@@ -90,22 +90,25 @@ public class LoginActivity extends AppCompatActivity{
             JSONObject paramObject = new JSONObject();
             paramObject.put("num_interno", String.valueOf(current_user.getnumInterno()));
             paramObject.put("password", current_user.getPassword());
-            Log.e(" Infor => ", String.valueOf(current_user.getnumInterno())+" "+ current_user.getPassword());
-            Call<String> userCall = apiInterface.login(paramObject.toString());
-            userCall.enqueue(new Callback<String>() {
+            //Log.e(" Infor => ", String.valueOf(current_user.getnumInterno())+" "+ current_user.getPassword());
+            Call<User> userCall = apiInterface.login(paramObject.toString());
+            userCall.enqueue(new Callback<User>() {
                 @Override
-                public void onResponse(Call<String> call, Response<String> response) {
+                public void onResponse(Call<User> call, Response<User> response) {
                     if (response.isSuccessful()) {
                         try{
-                            Log.e(" Full json gson => ", response.body());
-                            String div[] = response.body().split("\"");
-                            current_user.setToken(div[7]);
+                            //Log.e(" Full json gson => ", response.body().toString());
                             progessBarLogin.setVisibility(View.GONE);
+                            //Update user info
+                            current_user = response.body();
+                            if(current_user.getTipo() == 1){
+                                startActivity(new Intent(getApplicationContext(), MainActivityAdmin.class).putExtra("user", current_user));
+                                finish();
+                            }else{
+                                startActivity(new Intent(getApplicationContext(), MainActivity.class).putExtra("user", current_user));
+                                finish();
+                            }
 
-                            //TODO:Update user info;
-
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class).putExtra("user", current_user));
-                            finish();
                         }catch (NullPointerException npe){
                             npe.printStackTrace();
                             progessBarLogin.setVisibility(View.GONE);
@@ -125,7 +128,7 @@ public class LoginActivity extends AppCompatActivity{
 
                 }
                 @Override
-                public void onFailure(Call<String> call, Throwable t) {
+                public void onFailure(Call<User> call, Throwable t) {
                     Log.e("Tag", "error" + t.toString());
                     Toast.makeText(LoginActivity.this, getString(R.string.server_error), Toast.LENGTH_SHORT).show();
                     progessBarLogin.setVisibility(View.GONE);

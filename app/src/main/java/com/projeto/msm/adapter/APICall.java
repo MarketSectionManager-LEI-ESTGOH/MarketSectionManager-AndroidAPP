@@ -19,5 +19,5 @@ public interface APICall {
 
     @Headers("Content-Type: application/json")
     @POST("/login")
-    Call<String> login(@Body String body);
+    Call<User> login(@Body String body);
 }
