@@ -8,13 +8,23 @@
     android:id="@+id/drawer_layout"
     tools:context=".activity.MainActivity">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <include
-            layout="@layout/main_toolbar"/>
+
+        <ImageButton
+            android:id="@+id/qrcode_scanner"
+            android:layout_width="78dp"
+            android:layout_height="78dp"
+            android:layout_marginEnd="28dp"
+            android:layout_marginBottom="28dp"
+            android:background="@drawable/btt_round"
+            android:scaleType="fitCenter"
+            android:padding="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/ic_scan" />
 
         <TextView
             android:id="@+id/homeText"
@@ -23,8 +33,19 @@
             android:gravity="center"
             android:text=""
             android:textSize="50sp"
-            android:textStyle="bold">
-        </TextView>
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="82dp"></TextView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            layout="@layout/main_toolbar"/>
 
     </LinearLayout>
 
