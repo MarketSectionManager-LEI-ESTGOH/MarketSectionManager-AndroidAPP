@@ -4,4 +4,18 @@
     <string name="no_password_warning">Campo Password Vazio!</string>
     <string name="login_error">Número ou password incorretos! Tente Novamente.</string>
     <string name="server_error">Erro no processo de login! Tente Novamente.</string>
+
+    <string name="scanner_dialog_textbox_cont">Conteúdo: (Confirme os dados)</string>
+    <string name="scanner_dialog_textbox_num">Número:</string>
+    <string name="scanner_dialog_textbox_desi">Designação:</string>
+    <string name="scanner_dialog_textbox_fab">Fabricante:</string>
+    <string name="scanner_dialog_textbox_max">Temperatura Máxima:</string>
+    <string name="scanner_dialog_textbox_min">Temperatura Minima:</string>
+    <string name="scanner_dialog_title">Conteúdo do código</string>
+    <string name="scanner_dialog_confirm">Adicionar</string>
+    <string name="scanner_dialog_cancel">Cancelar</string>
+    <string name="scanner_dialog_error">Campos em falta!</string>
+    <string name="scanner_dialog_error_send">Erro a enviar para o servidor!</string>
+    <string name="scanner_dialog_error_generic">Erro a guardar a informação!</string>
+    <string name="scanner_dialog_ok_send">Area frigorífica adicionada</string>
 </resources>

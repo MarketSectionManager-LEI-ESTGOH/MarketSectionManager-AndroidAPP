@@ -124,8 +124,6 @@ public class LoginActivity extends AppCompatActivity{
                             Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
                         }
                     }
-
-
                 }
                 @Override
                 public void onFailure(Call<User> call, Throwable t) {

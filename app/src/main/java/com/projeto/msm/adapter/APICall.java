@@ -1,6 +1,7 @@
 package com.projeto.msm.adapter;
 
 import com.google.gson.JsonObject;
+import com.projeto.msm.model.AreaFrigorifica;
 import com.projeto.msm.model.JWTToken;
 import com.projeto.msm.model.User;
 
@@ -20,4 +21,8 @@ public interface APICall {
     @Headers("Content-Type: application/json")
     @POST("/login")
     Call<User> login(@Body String body);
+
+    @Headers("Content-Type: application/json")
+    @POST("area/frigorifica")
+    Call<String> areafrig(@Body String body);
 }
