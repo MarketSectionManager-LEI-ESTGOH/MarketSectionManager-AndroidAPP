@@ -19,6 +19,7 @@ import com.google.gson.JsonParser;
 import com.projeto.msm.R;
 import com.projeto.msm.adapter.APICall;
 import com.projeto.msm.adapter.RetroClass;
+import com.projeto.msm.model.Encryption;
 import com.projeto.msm.model.JWTToken;
 import com.projeto.msm.model.User;
 
@@ -39,6 +40,7 @@ public class LoginActivity extends AppCompatActivity{
     private ProgressBar progessBarLogin;
 
     private User current_user;
+    private Encryption encryption;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,25 +98,33 @@ public class LoginActivity extends AppCompatActivity{
                 @Override
                 public void onResponse(Call<User> call, Response<User> response) {
                     if (response.isSuccessful()) {
-                        try{
-                            //Log.e(" Full json gson => ", response.body().toString());
-                            progessBarLogin.setVisibility(View.GONE);
-                            //Update user info
-                            current_user = response.body();
-                            if(current_user.getTipo() == 1){
-                                startActivity(new Intent(getApplicationContext(), MainActivityAdmin.class).putExtra("user", current_user));
-                                finish();
-                            }else{
-                                startActivity(new Intent(getApplicationContext(), MainActivity.class).putExtra("user", current_user));
-                                finish();
-                            }
+                        //Update user info
+                        current_user = response.body();
+                        //Log.e(" Full json gson => ", response.body().toString());
+                        if(encryption.validatePassword(textFieldPassword.getText().toString(),current_user.getPassword())){
+                            try{
+                                //Log.e(" Full json gson => ", response.body().toString());
+                                progessBarLogin.setVisibility(View.GONE);
 
-                        }catch (NullPointerException npe){
-                            npe.printStackTrace();
+                                if(current_user.getTipo() == 1){
+                                    startActivity(new Intent(getApplicationContext(), MainActivityAdmin.class).putExtra("user", current_user));
+                                    finish();
+                                }else{
+                                    startActivity(new Intent(getApplicationContext(), MainActivity.class).putExtra("user", current_user));
+                                    finish();
+                                }
+
+                            }catch (NullPointerException npe){
+                                npe.printStackTrace();
+                                progessBarLogin.setVisibility(View.GONE);
+                            }catch (Exception e){
+                                e.printStackTrace();
+                                progessBarLogin.setVisibility(View.GONE);
+                            }
+                        }else{
+                            current_user = null;
                             progessBarLogin.setVisibility(View.GONE);
-                        }catch (Exception e){
-                            e.printStackTrace();
-                            progessBarLogin.setVisibility(View.GONE);
+                            Toast.makeText(LoginActivity.this, getString(R.string.login_error), Toast.LENGTH_SHORT).show();
                         }
                     }else{
                         try {

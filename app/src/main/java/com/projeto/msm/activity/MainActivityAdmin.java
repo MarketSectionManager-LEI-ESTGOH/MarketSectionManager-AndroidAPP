@@ -59,7 +59,7 @@ public class MainActivityAdmin extends AppCompatActivity {
 
         TextView label = (TextView) findViewById (R.id.homeText);
         current_user = (User) getIntent().getSerializableExtra("user");
-        Log.e("Tag", "User on Main: " + current_user.toString());
+        //Log.e("Tag", "User on Main (admin): " + current_user.toString());
         label.setText(current_user.getName());
 
         qrcodescanner.setOnClickListener(new View.OnClickListener() {

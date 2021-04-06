@@ -5,6 +5,8 @@ import com.projeto.msm.model.AreaFrigorifica;
 import com.projeto.msm.model.JWTToken;
 import com.projeto.msm.model.User;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
@@ -25,4 +27,14 @@ public interface APICall {
     @Headers("Content-Type: application/json")
     @POST("area/frigorifica")
     Call<String> areafrig(@Body String body);
+
+    /*
+    //just a test
+    @Headers("Content-Type: application/json")
+    @GET("ggg")
+    Call<List<User>> getAllUsers(
+            @Field("xyz") String field1
+    );
+    */
+
 }

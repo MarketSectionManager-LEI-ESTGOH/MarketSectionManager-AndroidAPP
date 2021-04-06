@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
         TextView label = (TextView) findViewById (R.id.homeText);
         current_user = (User) getIntent().getSerializableExtra("user");
-        Log.e("Tag", "User on Main: " + current_user.toString());
+        //Log.e("Tag", "User on Main (non admin): " + current_user.toString());
         label.setText(current_user.getName());
     }
 
