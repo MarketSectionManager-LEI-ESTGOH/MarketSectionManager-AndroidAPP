@@ -4,19 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/main_side"
     tools:context=".activity.LoginActivity">
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="400dp"
-        android:layout_height="200dp"
+        android:layout_width="365dp"
+        android:layout_height="158dp"
         app:layout_constraintBottom_toTopOf="@+id/editLoginNum"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.454"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
-        app:srcCompat="@drawable/logoblackglow" />
+        app:srcCompat="@drawable/logowhite" />
 
     <EditText
         android:id="@+id/editLoginNum"
@@ -29,7 +30,7 @@
         android:ems="10"
         android:hint="Número de Identificação"
         android:inputType="number|textPersonName"
-        android:textColorHint="#000000"
+        android:textColorHint="@color/main_side_menu_text"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/editLoginPassword"
         app:layout_constraintEnd_toEndOf="parent"
@@ -45,7 +46,7 @@
         android:ems="10"
         android:hint="Password"
         android:inputType="textPassword"
-        android:textColorHint="#000000"
+        android:textColorHint="@color/main_side_menu_text"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/buttonLogin"
         app:layout_constraintEnd_toEndOf="parent"
@@ -61,7 +62,7 @@
         android:layout_marginEnd="32dp"
         android:background="@drawable/bg_round_button"
         android:text="Login"
-        android:textColor="#000000"
+        android:textColor="@color/main_side_menu_text"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/progressBarLogin"
         app:layout_constraintEnd_toEndOf="parent"

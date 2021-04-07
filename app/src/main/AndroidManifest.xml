@@ -3,9 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.projeto.msm">
 
+    <uses-sdk tools:overrideLibrary="com.google.zxing.client.android" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-sdk tools:overrideLibrary="com.google.zxing.client.android" />
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
@@ -16,11 +17,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Msm"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.MainActivityAdmin"></activity>
-        <activity android:name=".model.Capture"
+        <activity android:name=".activity.RegistoActivity"></activity>
+        <activity android:name=".activity.MainActivityAdmin" />
+        <activity
+            android:name=".model.Capture"
             android:screenOrientation="portrait"
             android:stateNotNeeded="true"
-            android:theme="@style/zxing_CaptureTheme"/>
+            android:theme="@style/zxing_CaptureTheme" />
         <activity android:name=".activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

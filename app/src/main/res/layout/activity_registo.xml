@@ -2,27 +2,29 @@
 <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/main_side"
-    android:backgroundTint="@color/main_side"
-    tools:context=".activity.MainActivity">
+    android:id="@+id/drawer_layout"
+    tools:context=".activity.RegistoActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/homeText"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="92dp"
             android:gravity="center"
-            android:text=""
-            android:textSize="50sp"
-            android:textStyle="bold"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="82dp"></TextView>
+            android:text="Registo Temperatura"
+            android:textColor="@color/white"
+            android:textSize="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></TextView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -43,6 +45,5 @@
 
         <include layout="@layout/main_nav_drawer"></include>
     </RelativeLayout>
-
 
 </androidx.drawerlayout.widget.DrawerLayout>

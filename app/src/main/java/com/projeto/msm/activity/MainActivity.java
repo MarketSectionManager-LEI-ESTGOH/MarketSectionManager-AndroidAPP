@@ -4,9 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
 
-    private User current_user;
+    private static User current_user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,19 +32,19 @@ public class MainActivity extends AppCompatActivity {
         label.setText(current_user.getName());
     }
 
-    public void ClickMenu(View view){
-        openDrawer(drawerLayout);
-    }
-
-    private static void openDrawer(DrawerLayout drawerLayout){
-        drawerLayout.openDrawer(GravityCompat.START);
-    }
-
     public void ClickLogo(View view){
         closeDrawer(drawerLayout);
     }
 
-    private void closeDrawer(DrawerLayout drawerLayout) {
+    public void ClickMenu(View view){
+        openDrawer(drawerLayout);
+    }
+
+    public static void openDrawer(DrawerLayout drawerLayout){
+        drawerLayout.openDrawer(GravityCompat.START);
+    }
+
+    public static void closeDrawer(DrawerLayout drawerLayout) {
         if(drawerLayout.isDrawerOpen(GravityCompat.START)){
             drawerLayout.closeDrawer(GravityCompat.START);
         }
@@ -52,6 +52,16 @@ public class MainActivity extends AppCompatActivity {
 
     public void ClickHome(View view){
         recreate();
+    }
+
+    public void ClickRegistos(View view){
+        redirectActivity(this, RegistoActivity.class);
+    }
+
+    public static void redirectActivity(Activity activity, Class aClass) {
+        Intent intent = new Intent(activity, aClass);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        activity.startActivity(intent.putExtra("user", current_user));
     }
 
     public void ClickLogout(View view){

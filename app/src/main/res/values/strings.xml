@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Masket Section Manager</string>
+    <string name="app_name">Market Section Manager</string>
     <string name="no_num_warning">Campo Número Vazio!</string>
     <string name="no_password_warning">Campo Password Vazio!</string>
     <string name="login_error">Número ou password incorretos! Tente Novamente.</string>
