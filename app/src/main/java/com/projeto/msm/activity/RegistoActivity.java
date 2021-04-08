@@ -12,6 +12,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -60,32 +63,26 @@ public class RegistoActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(layout);
 
-        //Update spinner with areafrigorifica
 
-        Log.e("Tag", "Array222: " + list.toString());
-        Log.e("Tag", "FFFFFFFFF: " + list.get(1));
-        //TODO:Update spinner
+        //Update spinner with areafrigorifica
+        final EditText number = (EditText) layout.findViewById(R.id.numero);
+        final Spinner spinner = (Spinner) layout.findViewById(R.id.arca_id);
+        ArrayList<Integer> arrayList = new ArrayList<>();
+        for(int i = 0; i < list.size(); i++){
+            arrayList.add(list.get(i).getNumero());
+        }
+        ArrayAdapter<Integer> arrayAdapter = new ArrayAdapter<Integer>(this, android.R.layout.simple_spinner_item, arrayList);
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(arrayAdapter);
 
         builder.setPositiveButton("Guardar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                /*
-                if(!isEmpty(numBox) && !isEmpty(desigBox) && !isEmpty(fabBox) && !isEmpty(tminBox) && !isEmpty(tmaxBox)){
-                    areaFrigorifica = new AreaFrigorifica();
-                    areaFrigorifica.setNumero(Integer.parseInt(numBox.getText().toString()));
-                    areaFrigorifica.setDesignacao(desigBox.getText().toString());
-                    areaFrigorifica.setFabricante(fabBox.getText().toString());
-                    areaFrigorifica.setTem_min(Integer.parseInt(tminBox.getText().toString()));
-                    areaFrigorifica.setTem_max(Integer.parseInt(tmaxBox.getText().toString()));
-                    sendAreaFrigorifica(areaFrigorifica);
-                    dialog.dismiss();
+                if(!isEmpty(number)){
+                    sendAreaFrigorificaTemp(number.getText().toString(), spinner.getSelectedItem().toString());
                 }else{
-                    Toast.makeText(MainActivityAdmin.this, R.string.scanner_dialog_error, Toast.LENGTH_LONG).show();
-                    ScannerDialogCall(codeContent);
+                    Toast.makeText(RegistoActivity.this, R.string.scanner_dialog_error, Toast.LENGTH_LONG).show();
                 }
-                //TODO:Save info
-                */
             }
         });
         builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -113,13 +110,57 @@ public class RegistoActivity extends AppCompatActivity {
     public void ClickLogout(View view){
         current_user = null;
         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-        finish();;
+        finish();
     }
 
     @Override
     protected void onPause(){
         super.onPause();
         MainActivity.closeDrawer(drawerLayout);
+    }
+
+    private void sendAreaFrigorificaTemp(String temp, String id){
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(APICall.Base_URL).addConverterFactory(ScalarsConverterFactory.create()).addConverterFactory(GsonConverterFactory.create(gson)).build();
+        APICall apiInterface = retrofit.create(APICall.class);
+        try {
+            JSONObject paramObject = new JSONObject();
+            paramObject.put("user_id", String.valueOf(current_user.getId()));
+            paramObject.put("temperatura", temp);
+            paramObject.put("area_frigorifica_id", id);
+
+            Call<String> frigCall = apiInterface.areafrigtemp(paramObject.toString());
+            frigCall.enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    if (response.isSuccessful()) {
+                        try{
+                            String id = response.body();
+                            Toast.makeText(RegistoActivity.this, getString(R.string.registo_dialog_ok_send), Toast.LENGTH_SHORT).show();
+                        }catch (NullPointerException npe){
+                            npe.printStackTrace();
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }else{
+                        try {
+                            Toast.makeText(RegistoActivity.this, getString(R.string.scanner_dialog_error_generic), Toast.LENGTH_SHORT).show();
+                        } catch (Exception e) {
+                            Toast.makeText(RegistoActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+                    Log.e("Tag", "error" + t.toString());
+                    Toast.makeText(RegistoActivity.this, getString(R.string.scanner_dialog_error_send), Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     private void getAreaFrigorifica(){
@@ -155,5 +196,9 @@ public class RegistoActivity extends AppCompatActivity {
                 Toast.makeText(RegistoActivity.this, getString(R.string.scanner_dialog_error_send), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private boolean isEmpty(EditText myeditText) {
+        return myeditText.getText().toString().trim().length() == 0;
     }
 }

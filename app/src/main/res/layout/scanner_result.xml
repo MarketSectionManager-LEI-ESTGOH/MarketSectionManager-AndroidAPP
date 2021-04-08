@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:id="@+id/layout_root"
+    android:background="@color/main_side"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
@@ -16,7 +17,7 @@
         android:layout_height="wrap_content"
         android:text="@string/scanner_dialog_textbox_cont"
         android:textAlignment="viewStart"
-        android:textColor="#000000"
+        android:textColor="@color/main_side_menu_text"
         android:textSize="18sp" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -31,8 +32,7 @@
             android:layout_height="46dp"
             android:gravity="center_vertical"
             android:text="@string/scanner_dialog_textbox_num"
-
-            android:textColor="#000000"
+            android:textColor="@color/main_side_menu_text"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -42,6 +42,8 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:hint=""
+            android:backgroundTint="@color/main_side_menu_text"
+            android:textColor="@color/main_side_menu_text"
             android:inputType="text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -62,8 +64,7 @@
             android:layout_height="46dp"
             android:gravity="center_vertical"
             android:text="@string/scanner_dialog_textbox_desi"
-
-            android:textColor="#000000"
+            android:textColor="@color/main_side_menu_text"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -74,6 +75,8 @@
             android:layout_height="0dp"
             android:hint=""
             android:inputType="text"
+            android:backgroundTint="@color/main_side_menu_text"
+            android:textColor="@color/main_side_menu_text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView3"
@@ -93,8 +96,7 @@
             android:layout_height="46dp"
             android:gravity="center_vertical"
             android:text="@string/scanner_dialog_textbox_fab"
-
-            android:textColor="#000000"
+            android:textColor="@color/main_side_menu_text"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -104,6 +106,8 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:hint=""
+            android:backgroundTint="@color/main_side_menu_text"
+            android:textColor="@color/main_side_menu_text"
             android:inputType="text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -125,8 +129,7 @@
             android:layout_height="46dp"
             android:gravity="center_vertical"
             android:text="@string/scanner_dialog_textbox_max"
-
-            android:textColor="#000000"
+            android:textColor="@color/main_side_menu_text"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -136,7 +139,9 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:hint=""
+            android:backgroundTint="@color/main_side_menu_text"
             android:inputType="text"
+            android:textColor="@color/main_side_menu_text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView5"
@@ -156,8 +161,7 @@
             android:layout_height="46dp"
             android:gravity="center_vertical"
             android:text="@string/scanner_dialog_textbox_min"
-
-            android:textColor="#000000"
+            android:textColor="@color/main_side_menu_text"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -168,6 +172,8 @@
             android:layout_height="0dp"
             android:hint=""
             android:inputType="text"
+            android:textColor="@color/main_side_menu_text"
+            android:backgroundTint="@color/main_side_menu_text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView2"

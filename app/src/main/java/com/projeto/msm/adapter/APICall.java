@@ -30,6 +30,10 @@ public interface APICall {
     Call<String> areafrig(@Body String body);
 
     @Headers("Content-Type: application/json")
+    @POST("area/frigorifica/temperatura")
+    Call<String> areafrigtemp(@Body String body);
+
+    @Headers("Content-Type: application/json")
     @GET("area/frigorifica")
     Call<ArrayList<AreaFrigorifica>> areafrigtemp();
 

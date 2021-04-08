@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:id="@+id/layout_root"
+    android:background="@color/main_side"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
@@ -16,7 +17,7 @@
         android:layout_height="wrap_content"
         android:text="@string/registo_addTemp_title"
         android:textAlignment="viewStart"
-        android:textColor="#000000"
+        android:textColor="@color/main_side_menu_text"
         android:textSize="18sp" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -31,7 +32,7 @@
             android:layout_height="46dp"
             android:gravity="center_vertical"
             android:text="@string/registo_arca"
-            android:textColor="#000000"
+            android:textColor="@color/main_side_menu_text"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -40,6 +41,8 @@
             android:id="@+id/arca_id"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:textColor="@color/main_side_menu_text"
+            android:backgroundTint="@color/main_side_menu_text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView1"
@@ -60,7 +63,7 @@
             android:layout_height="46dp"
             android:gravity="center_vertical"
             android:text="@string/registo_temperatura"
-            android:textColor="#000000"
+            android:textColor="@color/main_side_menu_text"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -71,11 +74,13 @@
             android:layout_height="46dp"
             android:hint=""
             android:inputType="numberSigned"
+            android:backgroundTint="@color/main_side_menu_text"
+            android:textColor="@color/main_side_menu_text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/textView3"
             app:layout_constraintStart_toEndOf="@+id/textView2"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.0"/>
 
         <TextView
             android:id="@+id/textView3"
@@ -83,7 +88,7 @@
             android:layout_height="46dp"
             android:gravity="center_vertical"
             android:text="ºC"
-            android:textColor="#000000"
+            android:textColor="@color/main_side_menu_text"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
