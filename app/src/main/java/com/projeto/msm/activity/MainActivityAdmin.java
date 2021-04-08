@@ -180,7 +180,6 @@ public class MainActivityAdmin extends AppCompatActivity {
                     Toast.makeText(MainActivityAdmin.this, R.string.scanner_dialog_error, Toast.LENGTH_LONG).show();
                     ScannerDialogCall(codeContent);
                 }
-                //TODO:Save info
             }
         });
         builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {

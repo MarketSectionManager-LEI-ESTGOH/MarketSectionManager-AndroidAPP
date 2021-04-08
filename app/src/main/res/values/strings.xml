@@ -18,4 +18,10 @@
     <string name="scanner_dialog_error_send">Erro a enviar para o servidor!</string>
     <string name="scanner_dialog_error_generic">Erro a guardar a informação!</string>
     <string name="scanner_dialog_ok_send">Area frigorífica adicionada</string>
+
+    <string name="registo_addTemp">Adicionar registo de temperatura</string>
+    <string name="registo_addTemp_title">Adicionar novo registo:</string>
+    <string name="registo_arca">Area frigorifica:</string>
+    <string name="registo_temperatura">Temperatura:</string>
+    <string name="registo_dialog_ok_send">Temperatura registada com sucesso</string>
 </resources>
