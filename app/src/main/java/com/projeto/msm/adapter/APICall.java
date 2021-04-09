@@ -16,6 +16,8 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
 
 public interface APICall {
 
@@ -32,6 +34,10 @@ public interface APICall {
     @Headers("Content-Type: application/json")
     @POST("area/frigorifica/temperatura")
     Call<String> areafrigtemp(@Body String body);
+
+    @Headers("Content-Type: application/json")
+    @PUT("limpeza/frigorifica/{id}")
+    Call<String> areafriglimpeza(@Path ("id") String id, @Body String body);
 
     @Headers("Content-Type: application/json")
     @GET("area/frigorifica")

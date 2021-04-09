@@ -13,6 +13,7 @@
         android:layout_height="match_parent">
 
         <View
+            android:id="@+id/view"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginBottom="16dp"
@@ -24,6 +25,7 @@
             android:layout_height="1dp"
             android:layout_marginTop="16dp"
             android:background="@color/main_elements"
+            android:id="@+id/bottLine"
             app:layout_constraintTop_toBottomOf="@+id/AddTemp"></View>
 
         <TextView
@@ -68,6 +70,57 @@
                 app:tint="@color/main_elements"></ImageView>
 
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/main_elements"
+            app:layout_constraintTop_toBottomOf="@+id/AddLimpezaArca"></View>
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="@string/registo__main_addlimpezaArca"
+            android:textColor="@color/white"
+            android:textSize="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bottLine"></TextView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:id="@+id/AddLimpezaArca"
+            android:onClick="ClickAddLimpezaArca"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/textView4">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_weight="1"
+                android:padding="12dp"
+                android:text="@string/registo_addlimpezaArca"
+                android:textColor="@color/main_side_menu_text"></TextView>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="48dp"
+                android:src="@drawable/ic_baseline_add_24"
+                app:tint="@color/main_elements"></ImageView>
+
+        </LinearLayout>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

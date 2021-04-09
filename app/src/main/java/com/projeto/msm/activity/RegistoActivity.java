@@ -95,6 +95,40 @@ public class RegistoActivity extends AppCompatActivity {
         builder.show();
     }
 
+    public void ClickAddLimpezaArca(View view){
+        //Building dialog
+        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        View layout = inflater.inflate(R.layout.add_limpeza_form, (ViewGroup) findViewById(R.id.layout_root));
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(layout);
+
+        //Update spinner with areafrigorifica
+        final Spinner spinner = (Spinner) layout.findViewById(R.id.arca_id);
+        ArrayList<Integer> arrayList = new ArrayList<>();
+        for(int i = 0; i < list.size(); i++){
+            arrayList.add(list.get(i).getNumero());
+        }
+        ArrayAdapter<Integer> arrayAdapter = new ArrayAdapter<Integer>(this, android.R.layout.simple_spinner_item, arrayList);
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(arrayAdapter);
+
+        builder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                sendAreaFrigorificaLimepza(spinner.getSelectedItem().toString());
+            }
+        });
+        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        builder.show();
+    }
+
     public void ClickMenu(View view){
         MainActivity.openDrawer(drawerLayout);
     }
@@ -139,6 +173,48 @@ public class RegistoActivity extends AppCompatActivity {
                         try{
                             String id = response.body();
                             Toast.makeText(RegistoActivity.this, getString(R.string.registo_dialog_ok_send), Toast.LENGTH_SHORT).show();
+                        }catch (NullPointerException npe){
+                            npe.printStackTrace();
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }else{
+                        try {
+                            Toast.makeText(RegistoActivity.this, getString(R.string.scanner_dialog_error_generic), Toast.LENGTH_SHORT).show();
+                        } catch (Exception e) {
+                            Toast.makeText(RegistoActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+                    Log.e("Tag", "error" + t.toString());
+                    Toast.makeText(RegistoActivity.this, getString(R.string.scanner_dialog_error_send), Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void sendAreaFrigorificaLimepza(String id){
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(APICall.Base_URL).addConverterFactory(ScalarsConverterFactory.create()).addConverterFactory(GsonConverterFactory.create(gson)).build();
+        APICall apiInterface = retrofit.create(APICall.class);
+        try {
+            JSONObject paramObject = new JSONObject();
+            paramObject.put("user_limpeza", String.valueOf(current_user.getnumInterno()));
+
+            Call<String> frigCall = apiInterface.areafriglimpeza(id.toString(),paramObject.toString());
+            frigCall.enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    if (response.isSuccessful()) {
+                        try{
+                            String id = response.body();
+                            Toast.makeText(RegistoActivity.this, getString(R.string.registo_limpeza_dialog_ok_send), Toast.LENGTH_SHORT).show();
                         }catch (NullPointerException npe){
                             npe.printStackTrace();
                         }catch (Exception e){

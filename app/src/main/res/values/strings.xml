@@ -24,4 +24,9 @@
     <string name="registo_arca">Area frigorifica:</string>
     <string name="registo_temperatura">Temperatura:</string>
     <string name="registo_dialog_ok_send">Temperatura registada com sucesso</string>
+
+    <string name="registo__main_addlimpezaArca">Registo de limpeza</string>
+    <string name="registo_addlimpezaArca">Adicionar registo de limpeza</string>
+    <string name="registo_newaddlimpezaArca">Adicionar nova limpeza:</string>
+    <string name="registo_limpeza_dialog_ok_send">Limpeza registada com sucesso</string>
 </resources>
