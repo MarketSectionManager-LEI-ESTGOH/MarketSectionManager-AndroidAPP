@@ -3,6 +3,7 @@ package com.projeto.msm.adapter;
 import com.google.gson.JsonObject;
 import com.projeto.msm.model.AreaFrigorifica;
 import com.projeto.msm.model.JWTToken;
+import com.projeto.msm.model.Temperatura;
 import com.projeto.msm.model.User;
 
 import java.util.ArrayList;
@@ -42,6 +43,10 @@ public interface APICall {
     @Headers("Content-Type: application/json")
     @GET("area/frigorifica")
     Call<ArrayList<AreaFrigorifica>> areafrigtemp();
+
+    @Headers("Content-Type: application/json")
+    @GET("area/frigorifica/user/{id}")
+    Call<ArrayList<Temperatura>> areafrigtempByuser(@Path ("id") String id);
 
     /*
     //just a test

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:weightSum="150">
+
+
+    <TextView
+        android:id="@+id/list_hora"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="45"
+        android:text="data_hora"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/list_temmperatura"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="55"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:text="Temperatura"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/list_arca"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="50"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:text="Arca"
+        android:textSize="18sp" />
+
+</LinearLayout>

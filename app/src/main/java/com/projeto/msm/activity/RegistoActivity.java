@@ -52,6 +52,7 @@ public class RegistoActivity extends AppCompatActivity {
         current_user = (User) getIntent().getSerializableExtra("user");
         list = new ArrayList<>();
         getAreaFrigorifica();
+
         drawerLayout = findViewById(R.id.drawer_layout);
     }
 
@@ -251,7 +252,7 @@ public class RegistoActivity extends AppCompatActivity {
             public void onResponse(Call<ArrayList<AreaFrigorifica>> call, Response<ArrayList<AreaFrigorifica>> response) {
                 if (response.isSuccessful()) {
                     try{
-                        //Log.e("Tag", "Array: " + response.body());
+                        Log.e("Tag", "Array: " + response.body());
                         list = response.body();
                     }catch (NullPointerException npe){
                         npe.printStackTrace();
