@@ -12,9 +12,8 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_menu"
-        android:layout_marginLeft="5dp"
-        android:onClick="ClickMenu"
+        android:src="@drawable/ic_baseline_arrow_back_24"
+        android:onClick="ClickBack"
         app:tint="@color/main_elements">
     </ImageView>
 
@@ -29,13 +28,4 @@
         android:textStyle="bold"
         ></TextView>
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:src="@drawable/ic_more"
-        app:tint="@color/main_elements">
-    </ImageView>
-
 </LinearLayout>
-

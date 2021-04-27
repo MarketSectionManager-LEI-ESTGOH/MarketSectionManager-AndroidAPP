@@ -1,5 +1,6 @@
 package com.projeto.msm.activity;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -8,6 +9,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +24,7 @@ import com.google.gson.GsonBuilder;
 import com.projeto.msm.R;
 import com.projeto.msm.adapter.APICall;
 import com.projeto.msm.model.AreaFrigorifica;
+import com.projeto.msm.model.Rastreabilidade;
 import com.projeto.msm.model.User;
 
 import org.json.JSONException;
@@ -40,10 +43,9 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 public class RegistoActivity extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
-
-
     private static User current_user;
     private ArrayList<AreaFrigorifica> list;
+    int reqCodeRastreabilidade = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,6 +130,30 @@ public class RegistoActivity extends AppCompatActivity {
         });
         AlertDialog dialog = builder.create();
         builder.show();
+    }
+
+    public void ClickAddRastreabilidade(View view){
+        //TODO
+        Intent i = new Intent(getApplicationContext(), RastreabilidadeRegistoActivity.class);
+        startActivityForResult(i, reqCodeRastreabilidade);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == reqCodeRastreabilidade) {
+            if (resultCode == RESULT_OK) {
+
+                Bundle b = data.getExtras();
+                if(b != null){
+                    //TODO send to API
+                    Log.e("Tag", "BRUH: " + (Rastreabilidade) b.getSerializable("new_rastreabilidade"));
+                    Toast.makeText(this, R.string.registo_rastreabilidade_dialog_ok_send, Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(this, R.string.registo_rastreabilidade_dialog_error, Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
     }
 
     public void ClickMenu(View view){

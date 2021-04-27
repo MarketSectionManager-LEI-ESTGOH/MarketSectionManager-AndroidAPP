@@ -27,6 +27,14 @@
 
     <string name="registo__main_addlimpezaArca">Registo de limpeza</string>
     <string name="registo_addlimpezaArca">Adicionar registo de limpeza</string>
+    <string name="registo_addrastreabilidade">Adicionar registo de rastreabilidade</string>
+    <string name="registo__main_addrastreabilidade">Registo de rastreabilidade</string>
     <string name="registo_newaddlimpezaArca">Adicionar nova limpeza:</string>
     <string name="registo_limpeza_dialog_ok_send">Limpeza registada com sucesso</string>
+    <string name="registo_rastreabilidade_dialog_ok_send">Rastreabilidade registada com sucesso</string>
+    <string name="registo_rastreabilidade_dialog_error">Erro ao registar a rastreabilidade!!</string>
+
+    <string name="dashboard_hora">Data/Hora</string>
+    <string name="dashboard_temp">ºC</string>
+    <string name="dashboard_arca">Arca</string>
 </resources>

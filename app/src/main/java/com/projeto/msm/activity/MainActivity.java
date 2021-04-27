@@ -69,12 +69,9 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<ArrayList<Temperatura>> call, Response<ArrayList<Temperatura>> response) {
                 if (response.isSuccessful()) {
                     try{
-
                         temperaturaList = new ArrayList<>();
-
-                        Log.e("Tag", "Array: " + response.body());
+                        //Log.e("Tag", "Array: " + response.body());
                         temperaturaList = response.body();
-                        Log.e("Tag", "BRUH: " + temperaturaList.get(1));
 
                         TreeColumn_ListAdapter adapter = new TreeColumn_ListAdapter(getApplicationContext(), R.layout.list_adapter, temperaturaList);
                         listView.setAdapter(adapter);

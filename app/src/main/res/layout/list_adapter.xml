@@ -14,6 +14,7 @@
         android:layout_height="match_parent"
         android:layout_weight="45"
         android:text="data_hora"
+        android:textColor="@color/main_side_menu_text"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
         android:paddingLeft="10dp"
@@ -27,6 +28,7 @@
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
         android:text="Temperatura"
+        android:textColor="@color/main_side_menu_text"
         android:textSize="18sp" />
 
     <TextView
@@ -35,6 +37,7 @@
         android:layout_height="match_parent"
         android:layout_weight="50"
         android:paddingTop="5dp"
+        android:textColor="@color/main_side_menu_text"
         android:paddingBottom="5dp"
         android:text="Arca"
         android:textSize="18sp" />

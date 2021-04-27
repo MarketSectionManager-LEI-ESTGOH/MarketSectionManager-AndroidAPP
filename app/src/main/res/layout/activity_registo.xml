@@ -76,6 +76,7 @@
             android:layout_height="1dp"
             android:layout_marginTop="16dp"
             android:background="@color/main_elements"
+            android:id="@+id/bottLine2"
             app:layout_constraintTop_toBottomOf="@+id/AddLimpezaArca"></View>
 
         <TextView
@@ -121,6 +122,56 @@
 
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="@string/registo__main_addrastreabilidade"
+            android:textColor="@color/white"
+            android:textSize="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bottLine2"></TextView>
+
+        <LinearLayout
+            android:id="@+id/AddRastreabilidade"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:onClick="ClickAddRastreabilidade"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/textView5">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_weight="1"
+                android:padding="12dp"
+                android:text="@string/registo_addrastreabilidade"
+                android:textColor="@color/main_side_menu_text"></TextView>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="48dp"
+                android:src="@drawable/ic_baseline_add_24"
+                app:tint="@color/main_elements"></ImageView>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/main_elements"
+            android:id="@+id/bottLine3"
+            app:layout_constraintTop_toBottomOf="@+id/AddRastreabilidade"></View>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
