@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">Market Section Manager</string>
+    <string name="no_num_warning">Campo Número Vazio!</string>
+    <string name="no_password_warning">Campo Password Vazio!</string>
+    <string name="login_error">Número ou password incorretos! Tente Novamente.</string>
+    <string name="server_error">Erro no processo de login! Tente Novamente.</string>
+
+    <string name="scanner_dialog_textbox_cont">Conteúdo: (Confirme os dados)</string>
+    <string name="scanner_dialog_textbox_num">Número:</string>
+    <string name="scanner_dialog_textbox_desi">Designação:</string>
+    <string name="scanner_dialog_textbox_fab">Fabricante:</string>
+    <string name="scanner_dialog_textbox_max">Temperatura Máxima:</string>
+    <string name="scanner_dialog_textbox_min">Temperatura Minima:</string>
+    <string name="scanner_dialog_title">Conteúdo do código</string>
+    <string name="scanner_dialog_confirm">Adicionar</string>
+    <string name="scanner_dialog_cancel">Cancelar</string>
+    <string name="scanner_dialog_error">Campos em falta!</string>
+    <string name="scanner_dialog_error_send">Erro a enviar para o servidor!</string>
+    <string name="scanner_dialog_error_generic">Erro a guardar a informação!</string>
+    <string name="scanner_dialog_ok_send">Area frigorífica adicionada</string>
+
+    <string name="registo_addTemp">Adicionar registo de temperatura</string>
+    <string name="registo_addTemp_title">Adicionar novo registo:</string>
+    <string name="registo_arca">Area frigorifica:</string>
+    <string name="registo_temperatura">Temperatura:</string>
+    <string name="registo_dialog_ok_send">Temperatura registada com sucesso</string>
+
+    <string name="registo__main_addlimpezaArca">Registo de limpeza</string>
+    <string name="registo_addlimpezaArca">Adicionar registo de limpeza</string>
+    <string name="registo_addrastreabilidade">Adicionar registo de rastreabilidade</string>
+    <string name="registo__main_addrastreabilidade">Registo de rastreabilidade</string>
+    <string name="registo_newaddlimpezaArca">Adicionar nova limpeza:</string>
+    <string name="registo_limpeza_dialog_ok_send">Limpeza registada com sucesso</string>
+    <string name="registo_rastreabilidade_dialog_ok_send">Rastreabilidade registada com sucesso</string>
+    <string name="registo_rastreabilidade_dialog_error">Erro ao registar a rastreabilidade!!</string>
+
+    <string name="dashboard_hora">Data/Hora</string>
+    <string name="dashboard_temp">ºC</string>
+    <string name="dashboard_arca">Arca</string>
+</resources>
