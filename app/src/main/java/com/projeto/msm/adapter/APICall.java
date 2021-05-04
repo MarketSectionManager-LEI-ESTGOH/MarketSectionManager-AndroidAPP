@@ -48,6 +48,10 @@ public interface APICall {
     @GET("area/frigorifica/user/{id}")
     Call<ArrayList<Temperatura>> areafrigtempByuser(@Path ("id") String id);
 
+    @Headers("Content-Type: application/json")
+    @POST("/rastreabilidade")
+    Call<String> sendRastreabilidade(@Body String body);
+
     /*
     //just a test
     @Headers("Content-Type: application/json")

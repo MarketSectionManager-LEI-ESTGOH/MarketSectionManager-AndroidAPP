@@ -44,8 +44,6 @@ public class RastreabilidadeRegistoActivity extends AppCompatActivity {
         }else{
             Toast.makeText(RastreabilidadeRegistoActivity.this, R.string.scanner_dialog_error, Toast.LENGTH_LONG).show();
         }
-        Toast.makeText(getApplicationContext(), "kkk: ", Toast.LENGTH_SHORT).show();
-
     }
 
     public void onClickVoltar(View view){
