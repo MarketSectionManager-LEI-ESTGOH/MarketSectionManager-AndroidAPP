@@ -72,15 +72,15 @@
             android:id="@+id/numero"
             android:layout_width="0dp"
             android:layout_height="46dp"
-            android:hint=""
-            android:inputType="numberSigned"
             android:backgroundTint="@color/main_side_menu_text"
+            android:hint=""
+            android:inputType="numberSigned|numberDecimal"
             android:textColor="@color/main_side_menu_text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/textView3"
             app:layout_constraintStart_toEndOf="@+id/textView2"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"/>
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/textView3"
