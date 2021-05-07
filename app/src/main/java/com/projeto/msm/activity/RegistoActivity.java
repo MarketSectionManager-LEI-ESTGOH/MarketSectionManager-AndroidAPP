@@ -52,6 +52,7 @@ public class RegistoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registo);
         current_user = (User) getIntent().getSerializableExtra("user");
+        Log.e("Tag", "Registo: " + current_user.toString());
         list = new ArrayList<>();
         getAreaFrigorifica();
 
@@ -156,7 +157,12 @@ public class RegistoActivity extends AppCompatActivity {
     }
 
     public void ClickHome(View view){
-        MainActivity.redirectActivity(this, MainActivity.class);
+        if(current_user.getTipo() == 0){
+            MainActivity.redirectActivity(this, MainActivity.class);
+        }else{
+            MainActivityAdmin.redirectActivity(this, MainActivityAdmin.class);
+        }
+
     }
 
     public void ClickRegistos(View view){
