@@ -2,7 +2,8 @@ package com.projeto.msm.model;
 
 public class AreaFrigorifica {
     private String designacao, fabricante, d_t_limpeza, d_t_adicao;
-    private int numero, id, tem_min, tem_max, user_limpeza;
+    private int numero, id, user_limpeza;
+    private float tem_min, tem_max;
 
     public AreaFrigorifica() {
         this.d_t_adicao = null;
@@ -16,7 +17,7 @@ public class AreaFrigorifica {
         this.tem_max = -1;
     }
 
-    public AreaFrigorifica(String designacao, String fabricante, int numero, int id, int tem_min, int tem_max, String d_t_limpeza, int user_limpeza, String d_t_adicao) {
+    public AreaFrigorifica(String designacao, String fabricante, int numero, int id, float tem_min, float tem_max, String d_t_limpeza, int user_limpeza, String d_t_adicao) {
         this.d_t_adicao = d_t_adicao;
         this.d_t_limpeza = d_t_limpeza;
         this.user_limpeza = user_limpeza;
@@ -52,11 +53,11 @@ public class AreaFrigorifica {
         return user_limpeza;
     }
 
-    public int getTem_min() {
+    public float getTem_min() {
         return tem_min;
     }
 
-    public int getTem_max() {
+    public float getTem_max() {
         return tem_max;
     }
 

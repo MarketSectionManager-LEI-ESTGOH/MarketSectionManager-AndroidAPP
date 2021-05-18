@@ -5,6 +5,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.DialogFragment;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -41,12 +42,14 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
+import static com.projeto.msm.activity.MainActivity.redirectActivity;
+
 public class MainActivityAdmin extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
     private ImageButton qrcodescanner;
 
-    private User current_user;
+    private static User current_user;
     private AreaFrigorifica areaFrigorifica;
 
     @Override
@@ -59,7 +62,7 @@ public class MainActivityAdmin extends AppCompatActivity {
 
         TextView label = (TextView) findViewById (R.id.homeText);
         current_user = (User) getIntent().getSerializableExtra("user");
-        //Log.e("Tag", "User on Main (admin): " + current_user.toString());
+        Log.e("Tag", "User on Main (admin): " + current_user.toString());
         label.setText(current_user.getName());
 
         qrcodescanner.setOnClickListener(new View.OnClickListener() {
@@ -122,6 +125,16 @@ public class MainActivityAdmin extends AppCompatActivity {
         current_user = null;
         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
         finish();
+    }
+
+    public void ClickRegistos(View view){
+        redirectActivity(this, RegistoActivity.class);
+    }
+
+    public static void redirectActivity(Activity activity, Class aClass) {
+        Intent intent = new Intent(activity, aClass);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        activity.startActivity(intent.putExtra("user", current_user));
     }
 
     private void ScannerDialogCall(String codeContent){

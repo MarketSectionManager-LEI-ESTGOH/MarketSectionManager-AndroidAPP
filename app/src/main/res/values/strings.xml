@@ -24,6 +24,7 @@
     <string name="registo_arca">Area frigorifica:</string>
     <string name="registo_temperatura">Temperatura:</string>
     <string name="registo_dialog_ok_send">Temperatura registada com sucesso</string>
+    <string name="registo_dialog_ok_send_rastreabilidade">Rastreabilidade registada com sucesso</string>
 
     <string name="registo__main_addlimpezaArca">Registo de limpeza</string>
     <string name="registo_addlimpezaArca">Adicionar registo de limpeza</string>
@@ -37,4 +38,7 @@
     <string name="dashboard_hora">Data/Hora</string>
     <string name="dashboard_temp">ºC</string>
     <string name="dashboard_arca">Arca</string>
+
+    <string name="arcas_numero">Número</string>
+    <string name="arcas_designacao">Designação</string>
 </resources>

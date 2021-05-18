@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/main_side"
-    android:backgroundTint="@color/main_side"
-    tools:context=".activity.MainActivity">
+    android:id="@+id/drawer_layout"
+    tools:context=".activity.AreasActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -30,17 +28,27 @@
 
         </LinearLayout>
 
+        <View
+            android:id="@+id/bottLine3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/main_elements"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView6"></View>
+
         <TextView
             android:id="@+id/textView6"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:text="Registo Temperatura"
+            android:text="Áreas"
             android:textColor="@color/white"
             android:textSize="30sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.496"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout2"></TextView>
 
@@ -48,21 +56,24 @@
             android:id="@+id/linearLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
             android:orientation="horizontal"
-            android:weightSum="150"
+            android:weightSum="100"
+            app:layout_constraintBottom_toTopOf="@+id/areas_listView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView6">
+            app:layout_constraintTop_toBottomOf="@+id/bottLine3">
 
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="45"
+                android:layout_weight="70"
                 android:gravity="center_vertical"
                 android:paddingLeft="10dp"
                 android:paddingBottom="5dp"
-                android:text="@string/dashboard_hora"
+                android:text="@string/arcas_numero"
                 android:textColor="@color/main_side_menu_text"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -71,46 +82,36 @@
                 android:id="@+id/textView7"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="55"
+                android:layout_weight="30"
                 android:gravity="center_vertical"
                 android:paddingBottom="5dp"
-                android:text="@string/dashboard_temp"
-                android:textColor="@color/main_side_menu_text"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/textView8"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="50"
-                android:gravity="center_vertical"
-                android:paddingBottom="5dp"
-                android:text="@string/dashboard_arca"
+                android:text="@string/arcas_designacao"
                 android:textColor="@color/main_side_menu_text"
                 android:textSize="18sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
         <View
-            android:id="@+id/view2"
+            android:id="@+id/bottLine"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/main_elements"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-            tools:layout_editor_absoluteX="0dp"></View>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout"></View>
 
         <ListView
-            android:id="@+id/listview"
+            android:id="@+id/areas_listView"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:divider="@color/main_elements"
             android:dividerHeight="1dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.494"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view2" />
+            app:layout_constraintTop_toBottomOf="@+id/bottLine" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <RelativeLayout
@@ -121,6 +122,5 @@
 
         <include layout="@layout/main_nav_drawer"></include>
     </RelativeLayout>
-
 
 </androidx.drawerlayout.widget.DrawerLayout>

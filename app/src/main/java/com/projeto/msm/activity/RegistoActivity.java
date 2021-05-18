@@ -52,6 +52,7 @@ public class RegistoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registo);
         current_user = (User) getIntent().getSerializableExtra("user");
+        Log.e("Tag", "Registo: " + current_user.toString());
         list = new ArrayList<>();
         getAreaFrigorifica();
 
@@ -133,7 +134,6 @@ public class RegistoActivity extends AppCompatActivity {
     }
 
     public void ClickAddRastreabilidade(View view){
-        //TODO
         Intent i = new Intent(getApplicationContext(), RastreabilidadeRegistoActivity.class);
         startActivityForResult(i, reqCodeRastreabilidade);
     }
@@ -143,14 +143,10 @@ public class RegistoActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == reqCodeRastreabilidade) {
             if (resultCode == RESULT_OK) {
-
                 Bundle b = data.getExtras();
                 if(b != null){
-                    //TODO send to API
-                    Log.e("Tag", "BRUH: " + (Rastreabilidade) b.getSerializable("new_rastreabilidade"));
-                    Toast.makeText(this, R.string.registo_rastreabilidade_dialog_ok_send, Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(this, R.string.registo_rastreabilidade_dialog_error, Toast.LENGTH_SHORT).show();
+                    sendRastreabilidade((Rastreabilidade) b.getSerializable("new_rastreabilidade"), String.valueOf(current_user.getId()));
+
                 }
             }
         }
@@ -161,7 +157,16 @@ public class RegistoActivity extends AppCompatActivity {
     }
 
     public void ClickHome(View view){
-        MainActivity.redirectActivity(this, MainActivity.class);
+        if(current_user.getTipo() == 0){
+            MainActivity.redirectActivity(this, MainActivity.class);
+        }else{
+            MainActivityAdmin.redirectActivity(this, MainActivityAdmin.class);
+        }
+
+    }
+
+    public void ClickAreas(View view){
+        MainActivity.redirectActivity(this, AreasActivity.class);
     }
 
     public void ClickRegistos(View view){
@@ -178,6 +183,60 @@ public class RegistoActivity extends AppCompatActivity {
     protected void onPause(){
         super.onPause();
         MainActivity.closeDrawer(drawerLayout);
+    }
+
+    private void sendRastreabilidade(Rastreabilidade rastreabilidade, String id){
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(APICall.Base_URL).addConverterFactory(ScalarsConverterFactory.create()).addConverterFactory(GsonConverterFactory.create(gson)).build();
+        APICall apiInterface = retrofit.create(APICall.class);
+        try {
+            JSONObject paramObject = new JSONObject();
+            paramObject.put("user_id", id);
+            paramObject.put("lote", String.valueOf(rastreabilidade.getLote()));
+            paramObject.put("produto_id", String.valueOf(rastreabilidade.getNum_interno()));
+            paramObject.put("origem", rastreabilidade.getOrigem());
+            paramObject.put("fornecedor_id", rastreabilidade.getFornecedor());
+
+            Call<String> rastCall = apiInterface.sendRastreabilidade(paramObject.toString());
+            rastCall.enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    if (response.isSuccessful()) {
+                        try{
+                            String res = response.body();
+                            if(res != null){
+                                if(res.equalsIgnoreCase("\"err_forn\"")){
+                                    Toast.makeText(RegistoActivity.this, "O fornecedor não existe!!!", Toast.LENGTH_SHORT).show();
+                                }else if(res.equalsIgnoreCase("\"err_prod\"")){
+                                    Toast.makeText(RegistoActivity.this, "O produto não existe!!!", Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(RegistoActivity.this, getString(R.string.registo_dialog_ok_send_rastreabilidade), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        }catch (NullPointerException npe){
+                            npe.printStackTrace();
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }else{
+                        try {
+                            Toast.makeText(RegistoActivity.this, getString(R.string.scanner_dialog_error_generic), Toast.LENGTH_SHORT).show();
+                        } catch (Exception e) {
+                            Toast.makeText(RegistoActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+                    Log.e("Tag", "error" + t.toString());
+                    Toast.makeText(RegistoActivity.this, getString(R.string.scanner_dialog_error_send), Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     private void sendAreaFrigorificaTemp(String temp, String id){

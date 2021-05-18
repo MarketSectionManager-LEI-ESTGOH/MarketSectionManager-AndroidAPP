@@ -3,7 +3,8 @@ package com.projeto.msm.model;
 public class Temperatura {
 
     private String data_hora;
-    private int temperatura, area_frigorifica_id;
+    private float temperatura;
+    private int area_frigorifica_id;
 
     public Temperatura() {
         this.data_hora = null;
@@ -21,7 +22,7 @@ public class Temperatura {
         return data_hora;
     }
 
-    public int getTemperatura() {
+    public float getTemperatura() {
         return temperatura;
     }
 

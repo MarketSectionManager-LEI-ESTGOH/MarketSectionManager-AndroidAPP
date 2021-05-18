@@ -125,6 +125,10 @@ public class MainActivity extends AppCompatActivity {
         redirectActivity(this, RegistoActivity.class);
     }
 
+    public void ClickAreas(View view){
+        redirectActivity(this, AreasActivity.class);
+    }
+
     public static void redirectActivity(Activity activity, Class aClass) {
         Intent intent = new Intent(activity, aClass);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
