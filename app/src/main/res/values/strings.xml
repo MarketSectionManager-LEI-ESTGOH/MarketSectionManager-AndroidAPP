@@ -38,4 +38,7 @@
     <string name="dashboard_hora">Data/Hora</string>
     <string name="dashboard_temp">ºC</string>
     <string name="dashboard_arca">Arca</string>
+
+    <string name="arcas_numero">Número</string>
+    <string name="arcas_designacao">Designação</string>
 </resources>

@@ -165,6 +165,10 @@ public class RegistoActivity extends AppCompatActivity {
 
     }
 
+    public void ClickAreas(View view){
+        MainActivity.redirectActivity(this, AreasActivity.class);
+    }
+
     public void ClickRegistos(View view){
         recreate();
     }
