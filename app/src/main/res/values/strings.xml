@@ -41,4 +41,8 @@
 
     <string name="arcas_numero">Número</string>
     <string name="arcas_designacao">Designação</string>
+
+    <string name="componente_id">Id</string>
+    <string name="componente_nome">Designação</string>
+    <string name="componente_check">Limpo</string>
 </resources>

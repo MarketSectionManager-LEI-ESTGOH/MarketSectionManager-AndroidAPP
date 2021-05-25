@@ -17,7 +17,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Msm"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.AreasActivity"></activity>
+        <activity android:name=".activity.ComponentesActivity"></activity>
+        <activity android:name=".activity.AreasActivity" />
         <activity android:name=".activity.RastreabilidadeRegistoActivity" />
         <activity android:name=".activity.RegistoActivity" />
         <activity android:name=".activity.MainActivityAdmin" />
