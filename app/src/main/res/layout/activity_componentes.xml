@@ -66,11 +66,11 @@
                 android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="60"
+                android:layout_weight="35"
                 android:gravity="center_vertical"
                 android:paddingLeft="10dp"
                 android:paddingBottom="5dp"
-                android:text="@string/componente_id"
+                android:text="@string/componente_nome"
                 android:textColor="@color/main_side_menu_text"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -79,10 +79,10 @@
                 android:id="@+id/textView7"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="35"
+                android:layout_weight="60"
                 android:gravity="center_vertical"
                 android:paddingBottom="5dp"
-                android:text="@string/componente_nome"
+                android:text="@string/componente_check"
                 android:textColor="@color/main_side_menu_text"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -94,7 +94,7 @@
                 android:layout_weight="55"
                 android:gravity="center_vertical"
                 android:paddingBottom="5dp"
-                android:text="@string/componente_check"
+                android:text="@string/componente_data"
                 android:textColor="@color/main_side_menu_text"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -106,7 +106,7 @@
             android:layout_height="0dp"
             android:divider="@color/main_elements"
             android:dividerHeight="1dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/btt_guardar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/bottLine" />
@@ -120,6 +120,17 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout"></View>
+
+        <Button
+            android:id="@+id/btt_guardar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:onClick="guardaChecked"
+            android:text="Guardar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
