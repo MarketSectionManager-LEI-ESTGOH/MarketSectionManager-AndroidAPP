@@ -5,6 +5,7 @@ import com.projeto.msm.model.Area;
 import com.projeto.msm.model.AreaFrigorifica;
 import com.projeto.msm.model.Componente;
 import com.projeto.msm.model.JWTToken;
+import com.projeto.msm.model.Produto;
 import com.projeto.msm.model.Temperatura;
 import com.projeto.msm.model.User;
 
@@ -65,6 +66,10 @@ public interface APICall {
     @Headers("Content-Type: application/json")
     @POST("/area/componentes/{id}")
     Call<String> putLimpezaComponentesArea(@Path ("id") String id, @Body String body);
+
+    @Headers("Content-Type: application/json")
+    @GET("/produto/validade/{ean}")
+    Call<ArrayList<Produto>> getProdutoByEAN(@Path ("ean") String ean);
 
     /*
     //just a test

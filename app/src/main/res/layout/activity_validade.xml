@@ -8,12 +8,14 @@
     tools:context=".activity.ValidadeActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout6">
+        app:layout_constraintTop_toBottomOf="@+id/produto_subtext">
 
         <Button
             android:id="@+id/button2"
@@ -166,5 +168,15 @@
         <include layout="@layout/basic_toolbar" />
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/produto_subtext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textColor="@color/main_side_menu_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout6" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
