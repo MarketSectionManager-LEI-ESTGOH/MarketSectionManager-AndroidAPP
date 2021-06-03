@@ -27,7 +27,9 @@ import com.projeto.msm.model.User;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -90,11 +92,69 @@ public class ComponentesActivity extends AppCompatActivity {
     }
 
     public void guardaChecked(View view){
+        /*
         String aux = "";
         for(int i=0; i < checkedcomponentes.size(); i++){
             aux = aux+" "+checkedcomponentes.get(i).toString();
         }
         Toast.makeText(ComponentesActivity.this, aux, Toast.LENGTH_LONG).show();
+        */
+        if(checkedcomponentes.size() == 0){
+            Toast.makeText(ComponentesActivity.this, getString(R.string.scanner_dialog_error_no_componetes), Toast.LENGTH_SHORT).show();
+        }else{
+            Gson gson = new GsonBuilder()
+                    .setLenient()
+                    .create();
+            Retrofit retrofit = new Retrofit.Builder().baseUrl(APICall.Base_URL).addConverterFactory(ScalarsConverterFactory.create()).addConverterFactory(GsonConverterFactory.create(gson)).build();
+            APICall apiInterface = retrofit.create(APICall.class);
+            try {
+                JSONObject paramObject = new JSONObject();
+                //Log.e("Tag", "EEEEE" + checkedcomponentes.toString());
+                int count = 0;
+                for(int i = 0; i < checkedcomponentes.size(); i++){
+                    paramObject.put(String.valueOf(count), String.valueOf(area.getId()));
+                    paramObject.put(String.valueOf(count+1), String.valueOf(checkedcomponentes.get(i).getId()));
+                    count = count+2;
+                }
+                Log.e("Tag", "EEEEE" + paramObject.toString());
+
+                Call<String> rastCall = apiInterface.putLimpezaComponentesArea(String.valueOf(current_user.getId()) , paramObject.toString());
+                rastCall.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        if (response.isSuccessful()) {
+                            try{
+                                String res = response.body();
+                                Log.e("Tag", "EEEEE" + response.body());
+                                if(!res.equalsIgnoreCase("[]")){
+                                    Toast.makeText(ComponentesActivity.this, getString(R.string.registo_limpeza_dialog_ok_send), Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(ComponentesActivity.this, getString(R.string.scanner_dialog_error_generic), Toast.LENGTH_SHORT).show();
+                                }
+                            }catch (NullPointerException npe){
+                                npe.printStackTrace();
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
+                        }else{
+                            try {
+                                Toast.makeText(ComponentesActivity.this, getString(R.string.scanner_dialog_error_generic), Toast.LENGTH_SHORT).show();
+                            } catch (Exception e) {
+                                Toast.makeText(ComponentesActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        Log.e("Tag", "error" + t.toString());
+                        Toast.makeText(ComponentesActivity.this, getString(R.string.scanner_dialog_error_send), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void getComponentesArea(int area_num){
@@ -111,8 +171,40 @@ public class ComponentesActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     try{
                         componenteList = new ArrayList<>();
-                        Log.e("Tag", "Array: " + response.body());
                         componenteList = response.body();
+
+                        /*
+                        ArrayList<String> comp_names = new ArrayList<>();
+                        if(componenteList.size() > 0){
+                            for(int i = 0; i < componenteList.size(); i++){
+                                String c_name = componenteList.get(i).getDesignacao();
+                                if(!comp_names.contains(c_name)){
+                                    comp_names.add(c_name);
+                                }
+                            }
+                            if(comp_names.size() > 0){
+                                for(int i = 0; i < comp_names.size(); i++){
+                                    Componente num1 = new Componente();
+                                    num1.setDesignacao(comp_names.get(i));
+                                    num1.setData("1999-01-01");
+                                    for(int x = 0; x < componenteList.size(); x++){
+                                        if(componenteList.get(x).getDesignacao().equalsIgnoreCase(comp_names.get(i))){
+                                            SimpleDateFormat sdformat = new SimpleDateFormat("yyyy-MM-dd");
+                                            Date d1 = sdformat.parse(num1.getData());
+                                            Date d2 = sdformat.parse(componenteList.get(x).getData());
+                                            if(d1.compareTo(d2) < 0) {
+                                                num1.setData(componenteList.get(x).getData());
+                                                System.out.println("Date 1 occurs before Date 2");
+                                            }else{
+
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            Log.e("Tag", "Array: " + comp_names.toString());
+                        }
+                        */
 
                         Componentes_ListAdapter adapter = new Componentes_ListAdapter(getApplicationContext(), R.layout.componentes_list_adapter, componenteList);
                         listView.setAdapter(adapter);

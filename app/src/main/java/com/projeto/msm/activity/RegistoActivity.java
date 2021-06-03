@@ -46,6 +46,7 @@ public class RegistoActivity extends AppCompatActivity {
     private static User current_user;
     private ArrayList<AreaFrigorifica> list;
     int reqCodeRastreabilidade = 1;
+    int reqCodeValidade = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,6 +139,11 @@ public class RegistoActivity extends AppCompatActivity {
         startActivityForResult(i, reqCodeRastreabilidade);
     }
 
+    public void ClickAddValidade(View view){
+        Intent i = new Intent(getApplicationContext(), ValidadeActivity.class);
+        startActivityForResult(i, reqCodeValidade);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -147,6 +153,15 @@ public class RegistoActivity extends AppCompatActivity {
                 if(b != null){
                     sendRastreabilidade((Rastreabilidade) b.getSerializable("new_rastreabilidade"), String.valueOf(current_user.getId()));
 
+                }
+            }
+        }
+        if (requestCode == reqCodeValidade) {
+            if (resultCode == RESULT_OK) {
+                Bundle b = data.getExtras();
+                if(b != null){
+                    //sendRastreabilidade((Rastreabilidade) b.getSerializable("new_rastreabilidade"), String.valueOf(current_user.getId()));
+                    //TO:DO SEND VALIDADE DO BD
                 }
             }
         }

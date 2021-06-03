@@ -62,6 +62,10 @@ public interface APICall {
     @GET("/area/componentes/{area_num}")
     Call<ArrayList<Componente>> getComponentesArea(@Path ("area_num") String area_num);
 
+    @Headers("Content-Type: application/json")
+    @POST("/area/componentes/{id}")
+    Call<String> putLimpezaComponentesArea(@Path ("id") String id, @Body String body);
+
     /*
     //just a test
     @Headers("Content-Type: application/json")
