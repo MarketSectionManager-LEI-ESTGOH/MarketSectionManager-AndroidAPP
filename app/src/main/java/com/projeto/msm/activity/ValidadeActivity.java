@@ -1,6 +1,7 @@
 package com.projeto.msm.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.LinearLayoutCompat;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -16,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -32,6 +34,9 @@ import com.projeto.msm.model.AreaFrigorifica;
 import com.projeto.msm.model.Capture;
 import com.projeto.msm.model.Produto;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -47,9 +52,10 @@ public class ValidadeActivity extends AppCompatActivity {
     private ImageButton qrcodescanner;
     private DatePickerDialog picker;
     private EditText date;
-    private EditText produto;
+    private TextView produto;
     private TextView produto_subtext;
     private EditText ean_text;
+    private LinearLayout layout_nome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +66,8 @@ public class ValidadeActivity extends AppCompatActivity {
         ean_text = findViewById(R.id.rastreabilidadeLote);
         produto =  findViewById(R.id.validadeProduto);
         produto_subtext = findViewById(R.id.produto_subtext);
-        produto_subtext.setVisibility(View.GONE);
+        layout_nome = findViewById(R.id.linearLayout6);
+        layout_nome.setVisibility(View.GONE);
 
         date =  findViewById(R.id.data_validade);
         date.setInputType(InputType.TYPE_NULL);
@@ -76,7 +83,7 @@ public class ValidadeActivity extends AppCompatActivity {
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                                date.setText(dayOfMonth + "-" + month + "-" + year);
+                                date.setText(year + "-" + month + "-" + dayOfMonth);
                             }
                         }, year, month, mDay);
                 picker.show();
@@ -136,9 +143,9 @@ public class ValidadeActivity extends AppCompatActivity {
                         produtoList = response.body();
                         if(produtoList.size() > 0){
                             Log.e("Tag", "PRODUTO: " + produtoList.get(0).getN_interno());
-                            produto.setText(String.valueOf(produtoList.get(0).getN_interno()));
-                            produto_subtext.setVisibility(View.VISIBLE);
-                            produto_subtext.setText(produtoList.get(0).getNome() + '-' + produtoList.get(0).getMarca());
+                            produto.setText("Nº"+String.valueOf(produtoList.get(0).getN_interno()));
+                            layout_nome.setVisibility(View.VISIBLE);
+                            produto_subtext.setText(produtoList.get(0).getNome() + '(' + produtoList.get(0).getMarca() + ')');
                         }else{
                             Toast.makeText(ValidadeActivity.this, "Não existem produtos registados no sistema com esse EAN!", Toast.LENGTH_SHORT).show();
                         }
@@ -151,7 +158,7 @@ public class ValidadeActivity extends AppCompatActivity {
                     try {
                         produto.setText("");
                         produto_subtext.setText("");
-                        produto_subtext.setVisibility(View.GONE);
+                        layout_nome.setVisibility(View.GONE);
                         Toast.makeText(ValidadeActivity.this, "Não existem produtos registados no sistema com esse EAN!", Toast.LENGTH_SHORT).show();
                         Log.e("Tag", "error1");
                     } catch (Exception e) {
@@ -170,7 +177,60 @@ public class ValidadeActivity extends AppCompatActivity {
     }
 
     public void onClickAceitar(View view){
-        Toast.makeText(this, "-> " + "KKK", Toast.LENGTH_LONG).show();
+        if(!isEmpty(ean_text) && !isEmpty(date)){
+            Gson gson = new GsonBuilder()
+                    .setLenient()
+                    .create();
+            Retrofit retrofit = new Retrofit.Builder().baseUrl(APICall.Base_URL).addConverterFactory(ScalarsConverterFactory.create()).addConverterFactory(GsonConverterFactory.create(gson)).build();
+            APICall apiInterface = retrofit.create(APICall.class);
+            try {
+                JSONObject paramObject = new JSONObject();
+                paramObject.put("ean", ean_text.getText());
+                paramObject.put("validade", String.valueOf(date.getText()));
+                Log.e("Tag", "EEEEE" + paramObject.toString());
+
+                Call<String> rastCall = apiInterface.putValidadeByProduto(paramObject.toString());
+                rastCall.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        if (response.isSuccessful()) {
+                            try{
+                                String res = response.body();
+                                Log.e("Tag", "EEEEE" + response.body());
+                                if(!res.equalsIgnoreCase("[]")){
+                                    Toast.makeText(ValidadeActivity.this, "Validade registada com sucesso", Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(ValidadeActivity.this, "Erro a guardar a informação! (EAN ou data inválida)", Toast.LENGTH_SHORT).show();
+                                }
+                            }catch (NullPointerException npe){
+                                npe.printStackTrace();
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
+                        }else{
+                            try {
+                                Toast.makeText(ValidadeActivity.this, "Erro a guardar a informação! (EAN ou data inválida)", Toast.LENGTH_SHORT).show();
+                                Log.e("Tag", "error1");
+                            } catch (Exception e) {
+                                Log.e("Tag", "error2" + e);
+                                //Toast.makeText(ValidadeActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        Log.e("Tag", "error" + t.toString());
+                        Toast.makeText(ValidadeActivity.this, getString(R.string.scanner_dialog_error_send), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }else{
+            Toast.makeText(ValidadeActivity.this, R.string.scanner_dialog_error, Toast.LENGTH_LONG).show();
+        }
+
     }
 
     public void onClickVoltar(View view){
@@ -179,5 +239,9 @@ public class ValidadeActivity extends AppCompatActivity {
 
     public void ClickBack(View view){
         finish();
+    }
+
+    private boolean isEmpty(EditText myeditText) {
+        return myeditText.getText().toString().trim().length() == 0;
     }
 }

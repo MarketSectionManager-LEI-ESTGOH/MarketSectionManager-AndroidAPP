@@ -15,7 +15,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/produto_subtext">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout6">
 
         <Button
             android:id="@+id/button2"
@@ -142,18 +142,43 @@
             android:textColor="@color/main_side_menu_text"
             android:textSize="20sp" />
 
-        <EditText
+        <TextView
+            android:id="@+id/produto_subtext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:backgroundTint="@color/main_side_menu_text"
+            android:enabled="false"
+            android:gravity="center_vertical"
+            android:hint="Nome"
+            android:textColor="@color/main_elements"
+            android:textColorHint="@color/main_elements" />
+
+        <TextView
+            android:id="@+id/Separator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:backgroundTint="@color/main_side_menu_text"
+            android:enabled="false"
+            android:gravity="center_vertical"
+            android:hint="-"
+            android:textColor="@color/main_elements"
+            android:textColorHint="@color/main_elements" />
+
+        <TextView
             android:id="@+id/validadeProduto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:backgroundTint="@color/main_side_menu_text"
-            android:ems="10"
+            android:enabled="false"
             android:gravity="center_vertical"
             android:hint="Número Interno"
             android:inputType="number"
             android:textColor="@color/main_elements"
             android:textColorHint="@color/main_elements" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -168,15 +193,5 @@
         <include layout="@layout/basic_toolbar" />
 
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/produto_subtext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        android:textColor="@color/main_side_menu_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout6" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

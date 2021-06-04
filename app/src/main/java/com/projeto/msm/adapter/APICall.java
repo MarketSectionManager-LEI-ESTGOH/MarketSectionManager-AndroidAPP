@@ -71,6 +71,10 @@ public interface APICall {
     @GET("/produto/validade/{ean}")
     Call<ArrayList<Produto>> getProdutoByEAN(@Path ("ean") String ean);
 
+    @Headers("Content-Type: application/json")
+    @POST("/produto/validade")
+    Call<String> putValidadeByProduto(@Body String body);
+
     /*
     //just a test
     @Headers("Content-Type: application/json")
