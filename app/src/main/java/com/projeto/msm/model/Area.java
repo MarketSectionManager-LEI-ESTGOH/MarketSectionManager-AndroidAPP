@@ -1,6 +1,8 @@
 package com.projeto.msm.model;
 
-public class Area {
+import java.io.Serializable;
+
+public class Area implements Serializable{
     private String designacao;
     private int numero, id;
 

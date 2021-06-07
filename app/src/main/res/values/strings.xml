@@ -17,6 +17,7 @@
     <string name="scanner_dialog_error">Campos em falta!</string>
     <string name="scanner_dialog_error_send">Erro a enviar para o servidor!</string>
     <string name="scanner_dialog_error_generic">Erro a guardar a informação!</string>
+    <string name="scanner_dialog_error_no_componetes">Não foi selecionado nenhum componente!</string>
     <string name="scanner_dialog_ok_send">Area frigorífica adicionada</string>
 
     <string name="registo_addTemp">Adicionar registo de temperatura</string>
@@ -26,10 +27,10 @@
     <string name="registo_dialog_ok_send">Temperatura registada com sucesso</string>
     <string name="registo_dialog_ok_send_rastreabilidade">Rastreabilidade registada com sucesso</string>
 
-    <string name="registo__main_addlimpezaArca">Registo de limpeza</string>
+    <string name="registo__main_addlimpezaArca">Registo de Limpeza</string>
     <string name="registo_addlimpezaArca">Adicionar registo de limpeza</string>
     <string name="registo_addrastreabilidade">Adicionar registo de rastreabilidade</string>
-    <string name="registo__main_addrastreabilidade">Registo de rastreabilidade</string>
+    <string name="registo__main_addrastreabilidade">Registo de Rastreabilidade</string>
     <string name="registo_newaddlimpezaArca">Adicionar nova limpeza:</string>
     <string name="registo_limpeza_dialog_ok_send">Limpeza registada com sucesso</string>
     <string name="registo_rastreabilidade_dialog_ok_send">Rastreabilidade registada com sucesso</string>
@@ -41,4 +42,8 @@
 
     <string name="arcas_numero">Número</string>
     <string name="arcas_designacao">Designação</string>
+
+    <string name="componente_data">Última</string>
+    <string name="componente_nome">Designação</string>
+    <string name="componente_check">Limpo</string>
 </resources>

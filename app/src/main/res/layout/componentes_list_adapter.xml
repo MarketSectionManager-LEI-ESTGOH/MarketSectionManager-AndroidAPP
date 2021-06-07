@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:weightSum="150">
+
+
+    <TextView
+        android:id="@+id/componente_nome"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="35"
+        android:text="data_hora"
+        android:textColor="@color/main_side_menu_text"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:textSize="18sp" />
+
+    <CheckBox
+        android:id="@+id/componente_checked"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="60"
+        android:paddingTop="5dp"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:textColor="@color/main_side_menu_text"
+        android:paddingBottom="5dp"
+        android:buttonTint="@color/main_elements"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/componente_data"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="55"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:text="Temperatura"
+        android:textColor="@color/main_side_menu_text"
+        android:textSize="18sp" />
+
+</LinearLayout>
