@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -173,15 +174,15 @@ public class RegistoActivity extends AppCompatActivity {
 
     public void ClickHome(View view){
         if(current_user.getTipo() == 0){
-            MainActivity.redirectActivity(this, MainActivity.class);
+            redirectActivity(this, MainActivity.class);
         }else{
-            MainActivityAdmin.redirectActivity(this, MainActivityAdmin.class);
+            redirectActivity(this, MainActivityAdmin.class);
         }
 
     }
 
     public void ClickAreas(View view){
-        MainActivity.redirectActivity(this, AreasActivity.class);
+        redirectActivity(this, AreasActivity.class);
     }
 
     public void ClickRegistos(View view){
@@ -191,6 +192,13 @@ public class RegistoActivity extends AppCompatActivity {
     public void ClickLogout(View view){
         current_user = null;
         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        finish();
+    }
+
+    public void redirectActivity(Activity activity, Class aClass) {
+        Intent intent = new Intent(activity, aClass);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        activity.startActivity(intent.putExtra("user", current_user));
         finish();
     }
 

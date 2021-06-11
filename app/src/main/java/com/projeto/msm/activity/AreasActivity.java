@@ -145,10 +145,11 @@ public class AreasActivity extends AppCompatActivity {
     }
 
 
-    public static void redirectActivity(Activity activity, Class aClass) {
+    public void redirectActivity(Activity activity, Class aClass) {
         Intent intent = new Intent(activity, aClass);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         activity.startActivity(intent.putExtra("user", current_user));
+        finish();
     }
 
     public void ClickLogout(View view){

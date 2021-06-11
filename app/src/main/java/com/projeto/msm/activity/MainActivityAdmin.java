@@ -42,8 +42,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
-import static com.projeto.msm.activity.MainActivity.redirectActivity;
-
 public class MainActivityAdmin extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
@@ -131,10 +129,11 @@ public class MainActivityAdmin extends AppCompatActivity {
         redirectActivity(this, RegistoActivity.class);
     }
 
-    public static void redirectActivity(Activity activity, Class aClass) {
+    public void redirectActivity(Activity activity, Class aClass) {
         Intent intent = new Intent(activity, aClass);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         activity.startActivity(intent.putExtra("user", current_user));
+        finish();
     }
 
     private void ScannerDialogCall(String codeContent){
