@@ -222,7 +222,7 @@ public class MainActivityAdmin extends AppCompatActivity {
             paramObject.put("tem_min", String.valueOf(areaFrigorifica.getTem_max()));
             paramObject.put("tem_max", String.valueOf(areaFrigorifica.getTem_max()));
 
-            Call<String> frigCall = apiInterface.areafrig(paramObject.toString());
+            Call<String> frigCall = apiInterface.areafrig(current_user.getToken(), paramObject.toString());
             frigCall.enqueue(new Callback<String>() {
                 @Override
                 public void onResponse(Call<String> call, Response<String> response) {
@@ -235,6 +235,8 @@ public class MainActivityAdmin extends AppCompatActivity {
                         }catch (Exception e){
                             e.printStackTrace();
                         }
+                    }else if(response.code() == 403){
+                        Toast.makeText(MainActivityAdmin.this, getString(R.string.scanner_dialog_error_forbidden), Toast.LENGTH_SHORT).show();
                     }else{
                         try {
                             Toast.makeText(MainActivityAdmin.this, getString(R.string.scanner_dialog_error_generic), Toast.LENGTH_SHORT).show();

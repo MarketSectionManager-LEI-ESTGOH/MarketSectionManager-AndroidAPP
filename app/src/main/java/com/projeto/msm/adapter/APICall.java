@@ -33,7 +33,7 @@ public interface APICall {
 
     @Headers("Content-Type: application/json")
     @POST("area/frigorifica")
-    Call<String> areafrig(@Body String body);
+    Call<String> areafrig(@Header("Authorization") String authHeader, @Body String body);
 
     @Headers("Content-Type: application/json")
     @POST("area/frigorifica/temperatura")
@@ -61,11 +61,11 @@ public interface APICall {
 
     @Headers("Content-Type: application/json")
     @GET("/area/componentes/{area_num}")
-    Call<ArrayList<Componente>> getComponentesArea(@Path ("area_num") String area_num);
+    Call<ArrayList<Componente>> getComponentesArea(@Header("Authorization") String authHeader, @Path ("area_num") String area_num);
 
     @Headers("Content-Type: application/json")
     @POST("/area/componentes/{id}")
-    Call<String> putLimpezaComponentesArea(@Path ("id") String id, @Body String body);
+    Call<String> putLimpezaComponentesArea(@Header("Authorization") String authHeader, @Path ("id") String id, @Body String body);
 
     @Headers("Content-Type: application/json")
     @GET("/produto/validade/{ean}")

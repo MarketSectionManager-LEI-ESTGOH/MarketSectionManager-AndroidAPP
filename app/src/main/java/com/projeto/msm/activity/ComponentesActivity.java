@@ -118,7 +118,7 @@ public class ComponentesActivity extends AppCompatActivity {
                 }
                 Log.e("Tag", "EEEEE" + paramObject.toString());
 
-                Call<String> rastCall = apiInterface.putLimpezaComponentesArea(String.valueOf(current_user.getId()) , paramObject.toString());
+                Call<String> rastCall = apiInterface.putLimpezaComponentesArea(current_user.getToken(), String.valueOf(current_user.getId()) , paramObject.toString());
                 rastCall.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -128,6 +128,7 @@ public class ComponentesActivity extends AppCompatActivity {
                                 Log.e("Tag", "EEEEE" + response.body());
                                 if(!res.equalsIgnoreCase("[]")){
                                     Toast.makeText(ComponentesActivity.this, getString(R.string.registo_limpeza_dialog_ok_send), Toast.LENGTH_SHORT).show();
+                                    finish();
                                 }else{
                                     Toast.makeText(ComponentesActivity.this, getString(R.string.scanner_dialog_error_generic), Toast.LENGTH_SHORT).show();
                                 }
@@ -136,6 +137,8 @@ public class ComponentesActivity extends AppCompatActivity {
                             }catch (Exception e){
                                 e.printStackTrace();
                             }
+                        }else if(response.code() == 403){
+                            Toast.makeText(ComponentesActivity.this, getString(R.string.scanner_dialog_error_forbidden), Toast.LENGTH_SHORT).show();
                         }else{
                             try {
                                 Toast.makeText(ComponentesActivity.this, getString(R.string.scanner_dialog_error_generic), Toast.LENGTH_SHORT).show();
@@ -164,7 +167,7 @@ public class ComponentesActivity extends AppCompatActivity {
         Retrofit retrofit = new Retrofit.Builder().baseUrl(APICall.Base_URL).addConverterFactory(ScalarsConverterFactory.create()).addConverterFactory(GsonConverterFactory.create(gson)).build();
         APICall apiInterface = retrofit.create(APICall.class);
 
-        Call<ArrayList<Componente>> call = apiInterface.getComponentesArea(String.valueOf(area_num));
+        Call<ArrayList<Componente>> call = apiInterface.getComponentesArea(current_user.getToken(), String.valueOf(area_num));
         call.enqueue(new Callback<ArrayList<Componente>>() {
             @Override
             public void onResponse(Call<ArrayList<Componente>> call, Response<ArrayList<Componente>> response) {
@@ -214,9 +217,11 @@ public class ComponentesActivity extends AppCompatActivity {
                     }catch (Exception e){
                         e.printStackTrace();
                     }
+                }else if(response.code() == 403){
+                    Toast.makeText(ComponentesActivity.this, getString(R.string.scanner_dialog_error_forbidden), Toast.LENGTH_SHORT).show();
                 }else{
                     try {
-                        //Toast.makeText(MainActivity.this, getString(R.string.scanner_dialog_error_generic), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ComponentesActivity.this, getString(R.string.scanner_dialog_error_server), Toast.LENGTH_SHORT).show();
                         Log.e("Tag", "error1");
                     } catch (Exception e) {
                         Log.e("Tag", "error2" + e);
