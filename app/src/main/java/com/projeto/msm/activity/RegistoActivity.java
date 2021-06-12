@@ -73,11 +73,11 @@ public class RegistoActivity extends AppCompatActivity {
         //Update spinner with areafrigorifica
         final EditText number = (EditText) layout.findViewById(R.id.numero);
         final Spinner spinner = (Spinner) layout.findViewById(R.id.arca_id);
-        ArrayList<Integer> arrayList = new ArrayList<>();
+        ArrayList<String> arrayList = new ArrayList<>();
         for(int i = 0; i < list.size(); i++){
-            arrayList.add(list.get(i).getNumero());
+            arrayList.add(list.get(i).getNumero()+" - "+list.get(i).getDesignacao());
         }
-        ArrayAdapter<Integer> arrayAdapter = new ArrayAdapter<Integer>(this, android.R.layout.simple_spinner_item, arrayList);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, arrayList);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(arrayAdapter);
 
@@ -85,7 +85,8 @@ public class RegistoActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if(!isEmpty(number)){
-                    sendAreaFrigorificaTemp(number.getText().toString(), spinner.getSelectedItem().toString());
+                    String[] aux = spinner.getSelectedItem().toString().split(" - ");
+                    sendAreaFrigorificaTemp(number.getText().toString(), aux[0]);
                 }else{
                     Toast.makeText(RegistoActivity.this, R.string.scanner_dialog_error, Toast.LENGTH_LONG).show();
                 }
@@ -111,18 +112,19 @@ public class RegistoActivity extends AppCompatActivity {
 
         //Update spinner with areafrigorifica
         final Spinner spinner = (Spinner) layout.findViewById(R.id.arca_id);
-        ArrayList<Integer> arrayList = new ArrayList<>();
+        ArrayList<String> arrayList = new ArrayList<>();
         for(int i = 0; i < list.size(); i++){
-            arrayList.add(list.get(i).getNumero());
+            arrayList.add(list.get(i).getNumero()+" - "+list.get(i).getDesignacao());
         }
-        ArrayAdapter<Integer> arrayAdapter = new ArrayAdapter<Integer>(this, android.R.layout.simple_spinner_item, arrayList);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, arrayList);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(arrayAdapter);
 
         builder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                sendAreaFrigorificaLimepza(spinner.getSelectedItem().toString());
+                String[] aux = spinner.getSelectedItem().toString().split(" - ");
+                sendAreaFrigorificaLimepza(aux[0]);
             }
         });
         builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -142,6 +144,7 @@ public class RegistoActivity extends AppCompatActivity {
 
     public void ClickAddValidade(View view){
         Intent i = new Intent(getApplicationContext(), ValidadeActivity.class);
+        i.putExtra("user", current_user);
         startActivityForResult(i, reqCodeValidade);
     }
 
@@ -222,7 +225,7 @@ public class RegistoActivity extends AppCompatActivity {
             paramObject.put("origem", rastreabilidade.getOrigem());
             paramObject.put("fornecedor_id", rastreabilidade.getFornecedor());
 
-            Call<String> rastCall = apiInterface.sendRastreabilidade(paramObject.toString());
+            Call<String> rastCall = apiInterface.sendRastreabilidade(current_user.getToken(), paramObject.toString());
             rastCall.enqueue(new Callback<String>() {
                 @Override
                 public void onResponse(Call<String> call, Response<String> response) {
@@ -243,6 +246,8 @@ public class RegistoActivity extends AppCompatActivity {
                         }catch (Exception e){
                             e.printStackTrace();
                         }
+                    }else if(response.code() == 403){
+                        Toast.makeText(RegistoActivity.this, getString(R.string.scanner_dialog_error_forbidden), Toast.LENGTH_SHORT).show();
                     }else{
                         try {
                             Toast.makeText(RegistoActivity.this, getString(R.string.scanner_dialog_error_generic), Toast.LENGTH_SHORT).show();
@@ -254,7 +259,7 @@ public class RegistoActivity extends AppCompatActivity {
                 @Override
                 public void onFailure(Call<String> call, Throwable t) {
                     Log.e("Tag", "error" + t.toString());
-                    Toast.makeText(RegistoActivity.this, getString(R.string.scanner_dialog_error_send), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegistoActivity.this, getString(R.string.scanner_dialog_error_server), Toast.LENGTH_SHORT).show();
                 }
             });
         } catch (JSONException e) {
@@ -274,7 +279,7 @@ public class RegistoActivity extends AppCompatActivity {
             paramObject.put("temperatura", temp);
             paramObject.put("area_frigorifica_id", id);
 
-            Call<String> frigCall = apiInterface.areafrigtemp(paramObject.toString());
+            Call<String> frigCall = apiInterface.areafrigtempsend(current_user.getToken(), paramObject.toString());
             frigCall.enqueue(new Callback<String>() {
                 @Override
                 public void onResponse(Call<String> call, Response<String> response) {
@@ -287,6 +292,8 @@ public class RegistoActivity extends AppCompatActivity {
                         }catch (Exception e){
                             e.printStackTrace();
                         }
+                    }else if(response.code() == 403){
+                        Toast.makeText(RegistoActivity.this, getString(R.string.scanner_dialog_error_forbidden), Toast.LENGTH_SHORT).show();
                     }else{
                         try {
                             Toast.makeText(RegistoActivity.this, getString(R.string.scanner_dialog_error_generic), Toast.LENGTH_SHORT).show();
@@ -298,7 +305,7 @@ public class RegistoActivity extends AppCompatActivity {
                 @Override
                 public void onFailure(Call<String> call, Throwable t) {
                     Log.e("Tag", "error" + t.toString());
-                    Toast.makeText(RegistoActivity.this, getString(R.string.scanner_dialog_error_send), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegistoActivity.this, getString(R.string.scanner_dialog_error_server), Toast.LENGTH_SHORT).show();
                 }
             });
         } catch (JSONException e) {
@@ -316,7 +323,7 @@ public class RegistoActivity extends AppCompatActivity {
             JSONObject paramObject = new JSONObject();
             paramObject.put("user_limpeza", String.valueOf(current_user.getnumInterno()));
 
-            Call<String> frigCall = apiInterface.areafriglimpeza(id.toString(),paramObject.toString());
+            Call<String> frigCall = apiInterface.areafriglimpeza(current_user.getToken(), id.toString(),paramObject.toString());
             frigCall.enqueue(new Callback<String>() {
                 @Override
                 public void onResponse(Call<String> call, Response<String> response) {
@@ -329,6 +336,8 @@ public class RegistoActivity extends AppCompatActivity {
                         }catch (Exception e){
                             e.printStackTrace();
                         }
+                    }else if(response.code() == 403){
+                        Toast.makeText(RegistoActivity.this, getString(R.string.scanner_dialog_error_forbidden), Toast.LENGTH_SHORT).show();
                     }else{
                         try {
                             Toast.makeText(RegistoActivity.this, getString(R.string.scanner_dialog_error_generic), Toast.LENGTH_SHORT).show();
@@ -340,7 +349,7 @@ public class RegistoActivity extends AppCompatActivity {
                 @Override
                 public void onFailure(Call<String> call, Throwable t) {
                     Log.e("Tag", "error" + t.toString());
-                    Toast.makeText(RegistoActivity.this, getString(R.string.scanner_dialog_error_send), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegistoActivity.this, getString(R.string.scanner_dialog_error_server), Toast.LENGTH_SHORT).show();
                 }
             });
         } catch (JSONException e) {
@@ -354,7 +363,7 @@ public class RegistoActivity extends AppCompatActivity {
                 .create();
         Retrofit retrofit = new Retrofit.Builder().baseUrl(APICall.Base_URL).addConverterFactory(ScalarsConverterFactory.create()).addConverterFactory(GsonConverterFactory.create(gson)).build();
         APICall apiInterface = retrofit.create(APICall.class);
-        Call<ArrayList<AreaFrigorifica>> call = apiInterface.areafrigtemp();
+        Call<ArrayList<AreaFrigorifica>> call = apiInterface.areafrigtemp(current_user.getToken());
         call.enqueue(new Callback<ArrayList<AreaFrigorifica>>() {
             @Override
             public void onResponse(Call<ArrayList<AreaFrigorifica>> call, Response<ArrayList<AreaFrigorifica>> response) {
@@ -367,6 +376,8 @@ public class RegistoActivity extends AppCompatActivity {
                     }catch (Exception e){
                         e.printStackTrace();
                     }
+                }else if(response.code() == 403){
+                    Toast.makeText(RegistoActivity.this, getString(R.string.scanner_dialog_error_forbidden), Toast.LENGTH_SHORT).show();
                 }else{
                     try {
                         Toast.makeText(RegistoActivity.this, getString(R.string.scanner_dialog_error_generic), Toast.LENGTH_SHORT).show();
@@ -378,7 +389,7 @@ public class RegistoActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ArrayList<AreaFrigorifica>> call, Throwable t) {
                 Log.e("Tag", "error" + t.toString());
-                Toast.makeText(RegistoActivity.this, getString(R.string.scanner_dialog_error_send), Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegistoActivity.this, getString(R.string.scanner_dialog_error_server), Toast.LENGTH_SHORT).show();
             }
         });
     }

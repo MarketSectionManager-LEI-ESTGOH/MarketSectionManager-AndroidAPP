@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
     ListView listView;
+    TextView userName;
 
     private static User current_user;
 
@@ -45,10 +47,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         drawerLayout = findViewById(R.id.drawer_layout);
+        userName = findViewById(R.id.user_name);
 
         listView = (ListView) findViewById(R.id.listview);
 
         current_user = (User) getIntent().getSerializableExtra("user");
+        userName.setText(current_user.getName()+" - "+ current_user.getnumInterno());
         getUserLastInputs(current_user.getId());
         //Log.e("Tag", "BRUH: " + temperaturaList.get(1).getArca_frigorifica_id());
 
@@ -62,7 +66,8 @@ public class MainActivity extends AppCompatActivity {
                 .create();
         Retrofit retrofit = new Retrofit.Builder().baseUrl(APICall.Base_URL).addConverterFactory(ScalarsConverterFactory.create()).addConverterFactory(GsonConverterFactory.create(gson)).build();
         APICall apiInterface = retrofit.create(APICall.class);
-        Call<ArrayList<Temperatura>> call = apiInterface.areafrigtempByuser(String.valueOf(id));
+        Log.e("Tag", "ID: " + String.valueOf(id));
+        Call<ArrayList<Temperatura>> call = apiInterface.areafrigtempByuser(String.valueOf(id), current_user.getToken());
 
         call.enqueue(new Callback<ArrayList<Temperatura>>() {
             @Override
@@ -70,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     try{
                         temperaturaList = new ArrayList<>();
-                        //Log.e("Tag", "Array: " + response.body());
+                        Log.e("Tag", "Array: " + response.body());
                         temperaturaList = response.body();
 
                         TreeColumn_ListAdapter adapter = new TreeColumn_ListAdapter(getApplicationContext(), R.layout.list_adapter, temperaturaList);
@@ -81,10 +86,12 @@ public class MainActivity extends AppCompatActivity {
                     }catch (Exception e){
                         e.printStackTrace();
                     }
+                }else if(response.code() == 403){
+                    Toast.makeText(MainActivity.this, getString(R.string.scanner_dialog_error_forbidden), Toast.LENGTH_SHORT).show();
                 }else{
                     try {
-                        //Toast.makeText(MainActivity.this, getString(R.string.scanner_dialog_error_generic), Toast.LENGTH_SHORT).show();
-                        Log.e("Tag", "error1");
+                        Toast.makeText(MainActivity.this, response.code(), Toast.LENGTH_SHORT).show();
+                        Log.e("Tag", "error11");
                     } catch (Exception e) {
                         Log.e("Tag", "error2" + e);
                         //Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
@@ -94,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ArrayList<Temperatura>> call, Throwable t) {
                 Log.e("Tag", "error" + t.toString());
-                //Toast.makeText(MainActivity.this, getString(R.string.scanner_dialog_error_send), Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, getString(R.string.scanner_dialog_error_server), Toast.LENGTH_SHORT).show();
             }
         });
     }

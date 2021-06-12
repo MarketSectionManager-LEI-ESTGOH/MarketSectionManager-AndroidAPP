@@ -93,8 +93,8 @@ public class LoginActivity extends AppCompatActivity{
         try {
             JSONObject paramObject = new JSONObject();
             paramObject.put("num_interno", String.valueOf(current_user.getnumInterno()));
-            paramObject.put("password", current_user.getPassword());
-            //Log.e(" Infor => ", String.valueOf(current_user.getnumInterno())+" "+ current_user.getPassword());
+            paramObject.put("password", encryption.encrypt(current_user.getPassword()));
+            Log.e(" Infor => ", String.valueOf(current_user.getnumInterno())+" "+ encryption.encrypt(current_user.getPassword()));
             Call<User> userCall = apiInterface.login(paramObject.toString());
             userCall.enqueue(new Callback<User>() {
                 @Override
@@ -102,7 +102,7 @@ public class LoginActivity extends AppCompatActivity{
                     if (response.isSuccessful()) {
                         //Update user info
                         current_user = response.body();
-                        //Log.e(" Full json gson => ", response.body().toString());
+                        Log.e(" Full json gson => ", response.body().toString());
                         if(encryption.validatePassword(textFieldPassword.getText().toString(),current_user.getPassword())){
                             try{
                                 //Log.e(" Full json gson => ", response.body().toString());

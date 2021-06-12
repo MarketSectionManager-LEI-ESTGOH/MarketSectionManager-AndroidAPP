@@ -37,27 +37,27 @@ public interface APICall {
 
     @Headers("Content-Type: application/json")
     @POST("area/frigorifica/temperatura")
-    Call<String> areafrigtemp(@Body String body);
+    Call<String> areafrigtempsend(@Header("Authorization") String authHeader, @Body String body);
 
     @Headers("Content-Type: application/json")
     @PUT("limpeza/frigorifica/{id}")
-    Call<String> areafriglimpeza(@Path ("id") String id, @Body String body);
+    Call<String> areafriglimpeza(@Header("Authorization") String authHeader, @Path ("id") String id, @Body String body);
 
     @Headers("Content-Type: application/json")
     @GET("area/frigorifica")
-    Call<ArrayList<AreaFrigorifica>> areafrigtemp();
+    Call<ArrayList<AreaFrigorifica>> areafrigtemp(@Header("Authorization") String authHeader);
 
     @Headers("Content-Type: application/json")
     @GET("area/frigorifica/user/{id}")
-    Call<ArrayList<Temperatura>> areafrigtempByuser(@Path ("id") String id);
+    Call<ArrayList<Temperatura>> areafrigtempByuser(@Path ("id") String id, @Header("Authorization") String authHeader);
 
     @Headers("Content-Type: application/json")
     @POST("/rastreabilidade")
-    Call<String> sendRastreabilidade(@Body String body);
+    Call<String> sendRastreabilidade(@Header("Authorization") String authHeader, @Body String body);
 
     @Headers("Content-Type: application/json")
     @GET("/area")
-    Call<ArrayList<Area>> getAreas();
+    Call<ArrayList<Area>> getAreas(@Header("Authorization") String authHeader);
 
     @Headers("Content-Type: application/json")
     @GET("/area/componentes/{area_num}")
@@ -69,11 +69,11 @@ public interface APICall {
 
     @Headers("Content-Type: application/json")
     @GET("/produto/validade/{ean}")
-    Call<ArrayList<Produto>> getProdutoByEAN(@Path ("ean") String ean);
+    Call<ArrayList<Produto>> getProdutoByEAN(@Header("Authorization") String authHeader, @Path ("ean") String ean);
 
     @Headers("Content-Type: application/json")
     @POST("/produto/validade")
-    Call<String> putValidadeByProduto(@Body String body);
+    Call<String> putValidadeByProduto(@Header("Authorization") String authHeader, @Body String body);
 
     /*
     //just a test

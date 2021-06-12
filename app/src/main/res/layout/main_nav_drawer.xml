@@ -34,8 +34,11 @@
             android:layout_marginStart="16dp"
             android:layout_weight="1"
             android:padding="12dp"
-            android:text="A Minha Conta"
-            android:textColor="@color/main_side_menu_text"></TextView>
+            android:id="@+id/user_name"
+            android:text="Userxpto"
+            android:textColor="@color/main_side_menu_text"
+            android:textSize="16sp"
+            android:textStyle="bold"></TextView>
 
         <ImageView
             android:layout_width="wrap_content"
@@ -43,7 +46,16 @@
             android:layout_marginEnd="48dp"
             android:src="@drawable/ic_user"
             app:tint="@color/main_elements"></ImageView>
+
+
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@color/main_elements"></View>
 
     <LinearLayout
         android:layout_width="match_parent"

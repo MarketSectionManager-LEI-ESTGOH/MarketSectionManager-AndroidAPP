@@ -42,7 +42,7 @@ public class TreeColumn_ListAdapter extends ArrayAdapter<Temperatura> {
                 temperatura.setText(String.valueOf(temperatura_value.getTemperatura()));
             }
             if(arca != null){
-                arca.setText(String.valueOf(temperatura_value.getArca_frigorifica_id()));
+                arca.setText(String.valueOf(temperatura_value.getDesignacao()));
             }
         }
         return converterView;

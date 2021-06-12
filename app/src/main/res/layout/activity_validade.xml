@@ -24,6 +24,7 @@
             android:layout_marginEnd="32dp"
             android:onClick="onClickVoltar"
             android:text="Voltar"
+            android:textColor="@color/main_side"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -41,10 +42,35 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:onClick="onClickAceitar"
+            android:textColor="@color/main_side"
             android:text="Aceitar"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toTopOf="@+id/button2" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Registo de Validade"
+            android:textColor="@color/white"
+            android:textSize="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></TextView>
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout4"
@@ -55,7 +81,7 @@
         android:paddingLeft="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout1">
 
         <TextView
             android:id="@+id/textView9"

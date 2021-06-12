@@ -77,7 +77,7 @@ public class AreasActivity extends AppCompatActivity {
                 .create();
         Retrofit retrofit = new Retrofit.Builder().baseUrl(APICall.Base_URL).addConverterFactory(ScalarsConverterFactory.create()).addConverterFactory(GsonConverterFactory.create(gson)).build();
         APICall apiInterface = retrofit.create(APICall.class);
-        Call<ArrayList<Area>> call = apiInterface.getAreas();
+        Call<ArrayList<Area>> call = apiInterface.getAreas(current_user.getToken());
 
         call.enqueue(new Callback<ArrayList<Area>>() {
             @Override
@@ -96,6 +96,8 @@ public class AreasActivity extends AppCompatActivity {
                     }catch (Exception e){
                         e.printStackTrace();
                     }
+                }else if(response.code() == 403){
+                    Toast.makeText(AreasActivity.this, getString(R.string.scanner_dialog_error_forbidden), Toast.LENGTH_SHORT).show();
                 }else{
                     try {
                         //Toast.makeText(MainActivity.this, getString(R.string.scanner_dialog_error_generic), Toast.LENGTH_SHORT).show();
@@ -109,7 +111,7 @@ public class AreasActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ArrayList<Area>> call, Throwable t) {
                 Log.e("Tag", "error" + t.toString());
-                //Toast.makeText(MainActivity.this, getString(R.string.scanner_dialog_error_send), Toast.LENGTH_SHORT).show();
+                Toast.makeText(AreasActivity.this, getString(R.string.scanner_dialog_error_server), Toast.LENGTH_SHORT).show();
             }
         });
     }
