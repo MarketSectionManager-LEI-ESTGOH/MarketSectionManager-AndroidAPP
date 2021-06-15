@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -39,6 +41,7 @@ public class LoginActivity extends AppCompatActivity{
     private EditText textFieldNumero, textFieldPassword;
     private Button buttonLogin;
     private ProgressBar progessBarLogin;
+    private SharedPreferences preferences;
 
     private User current_user;
     private Encryption encryption;
@@ -50,6 +53,15 @@ public class LoginActivity extends AppCompatActivity{
         setContentView(R.layout.activity_login);
         inicializarComponentes();
         progessBarLogin.setVisibility(View.GONE);
+
+        //Check For login
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        int num_interno = preferences.getInt("num_interno", -1);
+        String password = preferences.getString("password",null);
+        if (num_interno != -1 && password != null) {
+            validarLogin_Shared(num_interno, password);
+        }
+
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,6 +79,7 @@ public class LoginActivity extends AppCompatActivity{
     }
 
     private void inicializarComponentes(){
+        preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         textFieldNumero = findViewById(R.id.editLoginNum);
         textFieldPassword = findViewById(R.id.editLoginPassword);
         buttonLogin = findViewById(R.id.buttonLogin);
@@ -77,11 +90,11 @@ public class LoginActivity extends AppCompatActivity{
         return myeditText.getText().toString().trim().length() == 0;
     }
 
-    private void validarLogin(){
+    private void validarLogin_Shared(int num_interno, String password){
         //Create current user
         current_user = new User();
-        current_user.setNum(Integer.parseInt(textFieldNumero.getText().toString()));
-        current_user.setPassword(textFieldPassword.getText().toString());
+        current_user.setNum(Integer.parseInt(String.valueOf(num_interno)));
+        current_user.setPassword(password);
         //Set bar visible
         progessBarLogin.setVisibility(View.VISIBLE);
         //Retrofit request
@@ -93,8 +106,8 @@ public class LoginActivity extends AppCompatActivity{
         try {
             JSONObject paramObject = new JSONObject();
             paramObject.put("num_interno", String.valueOf(current_user.getnumInterno()));
-            paramObject.put("password", encryption.encrypt(current_user.getPassword()));
-            Log.e(" Infor => ", String.valueOf(current_user.getnumInterno())+" "+ encryption.encrypt(current_user.getPassword()));
+            paramObject.put("password", current_user.getPassword());
+            //Log.e(" Infor => ", String.valueOf(current_user.getnumInterno())+" "+ encryption.encrypt(current_user.getPassword()));
             Call<User> userCall = apiInterface.login(paramObject.toString());
             userCall.enqueue(new Callback<User>() {
                 @Override
@@ -102,11 +115,17 @@ public class LoginActivity extends AppCompatActivity{
                     if (response.isSuccessful()) {
                         //Update user info
                         current_user = response.body();
-                        Log.e(" Full json gson => ", response.body().toString());
-                        if(encryption.validatePassword(textFieldPassword.getText().toString(),current_user.getPassword())){
+                        Log.e("ON LOGIN SHARED", response.body().toString());
+                        if(password.equals(current_user.getPassword())){
                             try{
                                 //Log.e(" Full json gson => ", response.body().toString());
                                 progessBarLogin.setVisibility(View.GONE);
+
+                                //Save to sharedPrefs
+                                SharedPreferences.Editor editor = preferences.edit();
+                                editor.putInt("num_interno",current_user.getnumInterno());
+                                editor.putString("password",current_user.getPassword());
+                                editor.apply();
 
                                 if(current_user.getTipo() == 1){
                                     startActivity(new Intent(getApplicationContext(), MainActivityAdmin.class).putExtra("user", current_user));
@@ -142,7 +161,84 @@ public class LoginActivity extends AppCompatActivity{
                     Log.e("Tag", "error" + t.toString());
                     Toast.makeText(LoginActivity.this, getString(R.string.server_error), Toast.LENGTH_SHORT).show();
                     progessBarLogin.setVisibility(View.GONE);
-                    //TODO: Reset activity?;
+                }
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void validarLogin(){
+        //Create current user
+        current_user = new User();
+        current_user.setNum(Integer.parseInt(textFieldNumero.getText().toString()));
+        current_user.setPassword(textFieldPassword.getText().toString());
+        //Set bar visible
+        progessBarLogin.setVisibility(View.VISIBLE);
+        //Retrofit request
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(APICall.Base_URL).addConverterFactory(ScalarsConverterFactory.create()).addConverterFactory(GsonConverterFactory.create(gson)).build();
+        APICall apiInterface = retrofit.create(APICall.class);
+        try {
+            JSONObject paramObject = new JSONObject();
+            paramObject.put("num_interno", String.valueOf(current_user.getnumInterno()));
+            paramObject.put("password", encryption.encrypt(current_user.getPassword()));
+            Log.e(" Infor => ", String.valueOf(current_user.getnumInterno())+" "+ encryption.encrypt(current_user.getPassword()));
+            Call<User> userCall = apiInterface.login(paramObject.toString());
+            userCall.enqueue(new Callback<User>() {
+                @Override
+                public void onResponse(Call<User> call, Response<User> response) {
+                    if (response.isSuccessful()) {
+                        //Update user info
+                        current_user = response.body();
+                        Log.e(" Full json gson => ", response.body().toString());
+                        if(encryption.validatePassword(textFieldPassword.getText().toString(),current_user.getPassword())){
+                            try{
+                                //Log.e(" Full json gson => ", response.body().toString());
+                                progessBarLogin.setVisibility(View.GONE);
+
+                                //Save to sharedPrefs
+                                SharedPreferences.Editor editor = preferences.edit();
+                                editor.putInt("num_interno",current_user.getnumInterno());
+                                editor.putString("password",current_user.getPassword());
+                                editor.apply();
+
+                                if(current_user.getTipo() == 1){
+                                    startActivity(new Intent(getApplicationContext(), MainActivityAdmin.class).putExtra("user", current_user));
+                                    finish();
+                                }else{
+                                    startActivity(new Intent(getApplicationContext(), MainActivity.class).putExtra("user", current_user));
+                                    finish();
+                                }
+
+                            }catch (NullPointerException npe){
+                                npe.printStackTrace();
+                                progessBarLogin.setVisibility(View.GONE);
+                            }catch (Exception e){
+                                e.printStackTrace();
+                                progessBarLogin.setVisibility(View.GONE);
+                            }
+                        }else{
+                            current_user = null;
+                            progessBarLogin.setVisibility(View.GONE);
+                            Toast.makeText(LoginActivity.this, getString(R.string.login_error), Toast.LENGTH_SHORT).show();
+                        }
+                    }else{
+                        try {
+                            progessBarLogin.setVisibility(View.GONE);
+                            Toast.makeText(LoginActivity.this, getString(R.string.login_error), Toast.LENGTH_SHORT).show();
+                        } catch (Exception e) {
+                            Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }
+                @Override
+                public void onFailure(Call<User> call, Throwable t) {
+                    Log.e("Tag", "error" + t.toString());
+                    Toast.makeText(LoginActivity.this, getString(R.string.server_error), Toast.LENGTH_SHORT).show();
+                    progessBarLogin.setVisibility(View.GONE);
                 }
             });
         } catch (JSONException e) {

@@ -16,7 +16,7 @@
     <string name="scanner_dialog_cancel">Cancelar</string>
     <string name="scanner_dialog_error">Campos em falta!</string>
     <string name="scanner_dialog_error_send">Erro a enviar para o servidor!</string>
-    <string name="scanner_dialog_error_server">Erro a no servidor!</string>
+    <string name="scanner_dialog_error_server">Erro no servidor!</string>
     <string name="scanner_dialog_error_generic">Erro a guardar a informação!</string>
     <string name="scanner_dialog_error_no_componetes">Não foi selecionado nenhum componente!</string>
     <string name="scanner_dialog_ok_send">Area frigorífica adicionada</string>

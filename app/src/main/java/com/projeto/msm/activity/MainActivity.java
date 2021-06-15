@@ -1,11 +1,17 @@
 package com.projeto.msm.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -87,10 +93,15 @@ public class MainActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }else if(response.code() == 403){
+                    current_user = null;
+                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.clear().commit();
+                    finish();
                     Toast.makeText(MainActivity.this, getString(R.string.scanner_dialog_error_forbidden), Toast.LENGTH_SHORT).show();
                 }else{
                     try {
-                        Toast.makeText(MainActivity.this, response.code(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, response.code(), Toast.LENGTH_LONG).show();
                         Log.e("Tag", "error11");
                     } catch (Exception e) {
                         Log.e("Tag", "error2" + e);
@@ -145,6 +156,9 @@ public class MainActivity extends AppCompatActivity {
     public void ClickLogout(View view){
         current_user = null;
         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.clear().commit();
         finish();
     }
 

@@ -138,6 +138,9 @@ public class ComponentesActivity extends AppCompatActivity {
                                 e.printStackTrace();
                             }
                         }else if(response.code() == 403){
+                            current_user = null;
+                            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                            finish();
                             Toast.makeText(ComponentesActivity.this, getString(R.string.scanner_dialog_error_forbidden), Toast.LENGTH_SHORT).show();
                         }else{
                             try {
@@ -218,6 +221,9 @@ public class ComponentesActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }else if(response.code() == 403){
+                    current_user = null;
+                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                    finish();
                     Toast.makeText(ComponentesActivity.this, getString(R.string.scanner_dialog_error_forbidden), Toast.LENGTH_SHORT).show();
                 }else{
                     try {
