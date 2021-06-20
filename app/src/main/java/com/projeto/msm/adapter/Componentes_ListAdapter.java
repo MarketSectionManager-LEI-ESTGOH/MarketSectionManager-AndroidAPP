@@ -36,6 +36,7 @@ public class Componentes_ListAdapter extends ArrayAdapter<Componente>{
     private class ViewHolder {
         TextView code;
         CheckBox name;
+        TextView data;
     }
 
     public View getView(int position, View converterView, ViewGroup parents){
@@ -49,6 +50,7 @@ public class Componentes_ListAdapter extends ArrayAdapter<Componente>{
             TextView nome = (TextView) converterView.findViewById(R.id.componente_nome);
             holder.code = nome;
             holder.name = (CheckBox) converterView.findViewById(R.id.componente_checked);
+            holder.data = data;
             converterView.setTag(holder);
             holder.name.setOnClickListener( new View.OnClickListener() {
                 public void onClick(View v) {

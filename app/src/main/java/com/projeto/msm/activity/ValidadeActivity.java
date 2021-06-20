@@ -8,7 +8,9 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -161,6 +163,9 @@ public class ValidadeActivity extends AppCompatActivity {
                     }
                 }else if(response.code() == 403){
                     current_user = null;
+                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.clear().commit();
                     startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                     finish();
                     Toast.makeText(ValidadeActivity.this, getString(R.string.scanner_dialog_error_forbidden), Toast.LENGTH_SHORT).show();
@@ -219,6 +224,9 @@ public class ValidadeActivity extends AppCompatActivity {
                             }
                         }else if(response.code() == 403){
                             current_user = null;
+                            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                            SharedPreferences.Editor editor = preferences.edit();
+                            editor.clear().commit();
                             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                             finish();
                             Toast.makeText(ValidadeActivity.this, getString(R.string.scanner_dialog_error_forbidden), Toast.LENGTH_SHORT).show();
@@ -246,6 +254,18 @@ public class ValidadeActivity extends AppCompatActivity {
             Toast.makeText(ValidadeActivity.this, R.string.scanner_dialog_error, Toast.LENGTH_LONG).show();
         }
 
+    }
+
+    protected void onPause(){
+        super.onPause();
+        //Save to sharedPrefs
+        if(current_user != null){
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putInt("num_interno",current_user.getnumInterno());
+            editor.putString("password",current_user.getPassword());
+            editor.apply();
+        }
     }
 
     public void onClickVoltar(View view){

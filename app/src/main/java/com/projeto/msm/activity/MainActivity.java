@@ -97,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
                     SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.clear().commit();
+                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                     finish();
                     Toast.makeText(MainActivity.this, getString(R.string.scanner_dialog_error_forbidden), Toast.LENGTH_SHORT).show();
                 }else{
@@ -165,6 +166,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause(){
         super.onPause();
-        closeDrawer(drawerLayout);
+        MainActivity.closeDrawer(drawerLayout);
+        //Save to sharedPrefs
+        if(current_user != null){
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putInt("num_interno",current_user.getnumInterno());
+            editor.putString("password",current_user.getPassword());
+            editor.apply();
+        }
     }
 }

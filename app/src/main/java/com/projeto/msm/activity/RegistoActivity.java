@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -18,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -44,16 +46,22 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 public class RegistoActivity extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
+    TextView userName;
+
     private static User current_user;
     private ArrayList<AreaFrigorifica> list;
     int reqCodeRastreabilidade = 1;
     int reqCodeValidade = 2;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registo);
         current_user = (User) getIntent().getSerializableExtra("user");
+        userName = findViewById(R.id.user_name);
+        userName.setText(current_user.getName()+" - "+ current_user.getnumInterno());
+
         Log.e("Tag", "Registo: " + current_user.toString());
         list = new ArrayList<>();
         getAreaFrigorifica();
@@ -195,6 +203,9 @@ public class RegistoActivity extends AppCompatActivity {
     public void ClickLogout(View view){
         current_user = null;
         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.clear().commit();
         finish();
     }
 
@@ -209,6 +220,14 @@ public class RegistoActivity extends AppCompatActivity {
     protected void onPause(){
         super.onPause();
         MainActivity.closeDrawer(drawerLayout);
+        //Save to sharedPrefs
+        if(current_user != null){
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putInt("num_interno",current_user.getnumInterno());
+            editor.putString("password",current_user.getPassword());
+            editor.apply();
+        }
     }
 
     private void sendRastreabilidade(Rastreabilidade rastreabilidade, String id){
@@ -248,6 +267,9 @@ public class RegistoActivity extends AppCompatActivity {
                         }
                     }else if(response.code() == 403){
                         current_user = null;
+                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.clear().commit();
                         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                         finish();
                         Toast.makeText(RegistoActivity.this, getString(R.string.scanner_dialog_error_forbidden), Toast.LENGTH_SHORT).show();
@@ -297,6 +319,9 @@ public class RegistoActivity extends AppCompatActivity {
                         }
                     }else if(response.code() == 403){
                         current_user = null;
+                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.clear().commit();
                         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                         finish();
                         Toast.makeText(RegistoActivity.this, getString(R.string.scanner_dialog_error_forbidden), Toast.LENGTH_SHORT).show();
@@ -344,6 +369,9 @@ public class RegistoActivity extends AppCompatActivity {
                         }
                     }else if(response.code() == 403){
                         current_user = null;
+                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.clear().commit();
                         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                         finish();
                         Toast.makeText(RegistoActivity.this, getString(R.string.scanner_dialog_error_forbidden), Toast.LENGTH_SHORT).show();
@@ -387,6 +415,9 @@ public class RegistoActivity extends AppCompatActivity {
                     }
                 }else if(response.code() == 403){
                     current_user = null;
+                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.clear().commit();
                     startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                     finish();
                     Toast.makeText(RegistoActivity.this, getString(R.string.scanner_dialog_error_forbidden), Toast.LENGTH_SHORT).show();

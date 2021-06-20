@@ -6,12 +6,15 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -40,6 +43,8 @@ public class AreasActivity extends AppCompatActivity {
     private ArrayList<Area> areaList;
 
     DrawerLayout drawerLayout;
+    TextView userName;
+
     ListView listView;
 
     private static User current_user;
@@ -50,10 +55,14 @@ public class AreasActivity extends AppCompatActivity {
         setContentView(R.layout.activity_areas);
 
         drawerLayout = findViewById(R.id.drawer_layout);
+        userName = findViewById(R.id.user_name);
 
         listView = (ListView) findViewById(R.id.areas_listView);
 
         current_user = (User) getIntent().getSerializableExtra("user");
+
+        userName = findViewById(R.id.user_name);
+        userName.setText(current_user.getName()+" - "+ current_user.getnumInterno());
 
         getAreas();
 
@@ -98,6 +107,9 @@ public class AreasActivity extends AppCompatActivity {
                     }
                 }else if(response.code() == 403){
                     current_user = null;
+                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.clear().commit();
                     startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                     finish();
                     Toast.makeText(AreasActivity.this, getString(R.string.scanner_dialog_error_forbidden), Toast.LENGTH_SHORT).show();
@@ -160,6 +172,9 @@ public class AreasActivity extends AppCompatActivity {
     public void ClickLogout(View view){
         current_user = null;
         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.clear().commit();
         finish();
     }
 

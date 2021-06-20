@@ -6,7 +6,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -45,6 +47,8 @@ public class ComponentesActivity extends AppCompatActivity {
     private Area area;
 
     DrawerLayout drawerLayout;
+    TextView userName;
+
     ListView listView;
     TextView nameView;
 
@@ -62,6 +66,9 @@ public class ComponentesActivity extends AppCompatActivity {
 
         current_user = (User) getIntent().getSerializableExtra("user");
         area = (Area) getIntent().getSerializableExtra("area");
+
+        userName = findViewById(R.id.user_name);
+        userName.setText(current_user.getName()+" - "+ current_user.getnumInterno());
 
         componenteList = new ArrayList<>();
         checkedcomponentes = new ArrayList<>();
@@ -178,7 +185,7 @@ public class ComponentesActivity extends AppCompatActivity {
                     try{
                         componenteList = new ArrayList<>();
                         componenteList = response.body();
-
+                        Log.e("Tag", "Array->: " + componenteList.toString());
                         /*
                         ArrayList<String> comp_names = new ArrayList<>();
                         if(componenteList.size() > 0){
@@ -222,6 +229,9 @@ public class ComponentesActivity extends AppCompatActivity {
                     }
                 }else if(response.code() == 403){
                     current_user = null;
+                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.clear().commit();
                     startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                     finish();
                     Toast.makeText(ComponentesActivity.this, getString(R.string.scanner_dialog_error_forbidden), Toast.LENGTH_SHORT).show();
@@ -284,6 +294,9 @@ public class ComponentesActivity extends AppCompatActivity {
     public void ClickLogout(View view){
         current_user = null;
         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.clear().commit();
         finish();
     }
 
@@ -291,5 +304,13 @@ public class ComponentesActivity extends AppCompatActivity {
     protected void onPause(){
         super.onPause();
         closeDrawer(drawerLayout);
+        //Save to sharedPrefs
+        if(current_user != null){
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putInt("num_interno",current_user.getnumInterno());
+            editor.putString("password",current_user.getPassword());
+            editor.apply();
+        }
     }
 }
