@@ -183,6 +183,8 @@ public class RegistoActivity extends AppCompatActivity {
         MainActivity.openDrawer(drawerLayout);
     }
 
+    public void SideMenu(View view){ }
+
     public void ClickHome(View view){
         if(current_user.getTipo() == 0){
             redirectActivity(this, MainActivity.class);

@@ -49,4 +49,12 @@
     <string name="componente_data">Última</string>
     <string name="componente_nome">Designação</string>
     <string name="componente_check">Limpo</string>
+
+    <string-array name="user_options_array">
+        <item>Últimos Registos de Temperatura</item>
+        <item>Últimos Registos de Limpeza de Componentes</item>
+        <item>Últimos Registos de Rastreabilidade</item>
+    </string-array>
+
+
 </resources>

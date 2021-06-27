@@ -261,6 +261,8 @@ public class ComponentesActivity extends AppCompatActivity {
         openDrawer(drawerLayout);
     }
 
+    public void SideMenu(View view){ }
+
     public static void openDrawer(DrawerLayout drawerLayout){
         drawerLayout.openDrawer(GravityCompat.START);
     }

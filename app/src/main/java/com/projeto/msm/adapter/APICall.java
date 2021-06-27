@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.projeto.msm.model.Area;
 import com.projeto.msm.model.AreaFrigorifica;
 import com.projeto.msm.model.Componente;
+import com.projeto.msm.model.ComponentesLimpos;
 import com.projeto.msm.model.JWTToken;
 import com.projeto.msm.model.Produto;
 import com.projeto.msm.model.Temperatura;
@@ -74,6 +75,10 @@ public interface APICall {
     @Headers("Content-Type: application/json")
     @POST("/produto/validade")
     Call<String> putValidadeByProduto(@Header("Authorization") String authHeader, @Body String body);
+
+    @Headers("Content-Type: application/json")
+    @GET("area/componetes/user/{id}")
+    Call<ArrayList<ComponentesLimpos>> getUserLastInputsCompoentes(@Path ("id") String id, @Header("Authorization") String authHeader);
 
     /*
     //just a test

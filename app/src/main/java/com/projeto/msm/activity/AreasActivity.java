@@ -149,6 +149,8 @@ public class AreasActivity extends AppCompatActivity {
         }
     }
 
+    public void SideMenu(View view){ }
+
     public void ClickHome(View view){
         redirectActivity(this, MainActivity.class);
     }
