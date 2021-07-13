@@ -58,6 +58,9 @@ public class MainActivity extends AppCompatActivity {
 
     private LinearLayout temp_layout;
     private LinearLayout limp_comp_layout;
+    private TextView limp_comp_layout1;
+    private TextView limp_comp_layout2;
+    private TextView limp_comp_layout3;
     private LinearLayout rast_layout;
     private View temp_View;
     private View limp_comp_View;
@@ -80,6 +83,10 @@ public class MainActivity extends AppCompatActivity {
         title = (TextView) findViewById(R.id.textView6);
         temp_layout = (LinearLayout) findViewById(R.id.linearLayout_temp);
         limp_comp_layout = (LinearLayout) findViewById(R.id.linearLayout_limpeza);
+        limp_comp_layout1 = (TextView) findViewById(R.id.textView_limp1);
+        limp_comp_layout2 = (TextView) findViewById(R.id.textView_limp2);
+        limp_comp_layout3 = (TextView) findViewById(R.id.textView_limp4);
+
         //LinearLayout rast_layout = (LinearLayout) findViewById(R.id.linearLayout_rast);
         temp_View = (View) findViewById(R.id.view2);
         limp_comp_View = (View) findViewById(R.id.view3);
@@ -88,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
         current_user = (User) getIntent().getSerializableExtra("user");
         userName.setText(current_user.getName()+" - "+ current_user.getnumInterno());
 
-        temp_layout.setVisibility(View.VISIBLE);
+        temp_layout.setVisibility(View.INVISIBLE);
         limp_comp_layout.setVisibility(View.INVISIBLE);
         //rast_layout.setVisibility(View.INVISIBLE);
 
@@ -229,9 +236,6 @@ public class MainActivity extends AppCompatActivity {
             case 1:
                 radioButtonGroup.check(R.id.radioButton_limp);
                 break;
-            case 2:
-                radioButtonGroup.check(R.id.radioButton_rast);
-                break;
             default:
                 menu_option = 0;
                 break;
@@ -280,8 +284,18 @@ public class MainActivity extends AppCompatActivity {
                         getUserLastInputs(current_user.getId());
                         break;
                     case 1:
-                        temp_layout.setVisibility(View.INVISIBLE);
-                        limp_comp_layout.setVisibility(View.VISIBLE);
+
+                        MainActivity.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                temp_layout.setVisibility(View.INVISIBLE);
+                                limp_comp_layout.setVisibility(View.VISIBLE);
+                                limp_comp_layout.bringToFront();
+                                limp_comp_layout1.setVisibility(View.VISIBLE);
+                                limp_comp_layout2.setVisibility(View.VISIBLE);
+                                limp_comp_layout3.setVisibility(View.VISIBLE);
+                            }
+                        });
                         //rast_layout.setVisibility(View.INVISIBLE);
 
                         temp_View.setVisibility(View.INVISIBLE);
@@ -289,7 +303,6 @@ public class MainActivity extends AppCompatActivity {
                         //rast_View.setVisibility(View.INVISIBLE);
 
                         limp_comp_View.invalidate();
-                        limp_comp_layout.invalidate();
 
                         title.setText("Registos de Limpeza");
 
@@ -298,12 +311,6 @@ public class MainActivity extends AppCompatActivity {
                         set.applyTo(main_const_layout);
 
                         getUserLastInputsCompoentes(current_user.getId());
-                        break;
-                    case 2:
-
-
-                        title.setText("Registos de Rastreabilidade");
-
                         break;
                     default:
                         menu_option = 0;

@@ -9,8 +9,10 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.Image;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -122,6 +124,9 @@ public class MainActivityAdmin extends AppCompatActivity {
     public void ClickLogout(View view){
         current_user = null;
         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.clear().commit();
         finish();
     }
 

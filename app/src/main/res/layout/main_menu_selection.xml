@@ -22,15 +22,15 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="159dp"
+        android:layout_height="109dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp">
 
 
         <RadioGroup
+            android:id="@+id/radioGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/radioGroup"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -38,8 +38,8 @@
             <RadioButton
                 android:id="@+id/radioButton_temp"
                 android:layout_width="match_parent"
-                android:buttonTint="@color/main_side_menu_text"
                 android:layout_height="wrap_content"
+                android:buttonTint="@color/main_side_menu_text"
                 android:text="Últimos Registos de Temperatura"
                 android:textColor="@color/white" />
 
@@ -49,15 +49,8 @@
                 android:layout_height="wrap_content"
                 android:buttonTint="@color/main_side_menu_text"
                 android:text="Últimos Registos de Limpeza de Componentes"
-                android:textColor="@color/white"/>
-
-            <RadioButton
-                android:id="@+id/radioButton_rast"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:buttonTint="@color/main_side_menu_text"
-                android:text="Últimos Registos de Rastreabilidade"
                 android:textColor="@color/white" />
+
         </RadioGroup>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

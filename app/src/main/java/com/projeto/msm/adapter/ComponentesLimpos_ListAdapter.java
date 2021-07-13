@@ -38,10 +38,48 @@ public View getView(int position, View converterView, ViewGroup parents){
                 TextView date = (TextView) converterView.findViewById(R.id.list_last_date);
 
                 if(comp_designacao != null){
+                        /*
+                        String aux = String.valueOf(componentesLimpos.getComponente());
+                        String arr[] = aux.split(" ");
+                        if(arr.length > 1){
+                                aux = "";
+                                for(int i = 0; i < arr.length; i++){
+                                        if(i == arr.length-1){
+                                                aux = aux + arr[i];
+                                        }else{
+                                                aux = aux + arr[i]+'\n';
+                                        }
+
+                                }
+                        }else{
+                                aux = arr[0];
+                        }
+
+                         */
                         comp_designacao.setText(componentesLimpos.getComponente());
+                        //comp_designacao.setText(aux);
                 }
                 if(designacao != null){
+                        /*
+                        String aux = String.valueOf(componentesLimpos.getArea());
+                        String arr[] = aux.split(" ");
+                        if(arr.length > 1){
+                                aux = "";
+                                for(int i = 0; i < arr.length; i++){
+                                        if(i == arr.length-1){
+                                                aux = aux + arr[i];
+                                        }else{
+                                                aux = aux + arr[i]+'\n';
+                                        }
+
+                                }
+                        }else{
+                                aux = arr[0];
+                        }
+                        */
+
                         designacao.setText(String.valueOf(componentesLimpos.getArea()));
+                        //designacao.setText(aux);
                 }
                 if(date != null){
                         date.setText(String.valueOf(componentesLimpos.getData()));
