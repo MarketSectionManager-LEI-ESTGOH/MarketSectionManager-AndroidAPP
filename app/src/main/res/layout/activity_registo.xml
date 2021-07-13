@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,6 +9,13 @@
     android:background="@color/main_side"
     android:id="@+id/drawer_layout"
     tools:context=".activity.RegistoActivity">
+
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -225,6 +234,7 @@
             app:layout_constraintTop_toBottomOf="@+id/AddValidade"></View>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"
