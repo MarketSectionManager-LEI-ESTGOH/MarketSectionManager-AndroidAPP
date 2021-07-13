@@ -39,10 +39,10 @@ public class TreeColumn_ListAdapter extends ArrayAdapter<Temperatura> {
                 hora.setText(temperatura_value.getData_hora());
             }
             if(temperatura != null){
-                temperatura.setText(String.valueOf(temperatura_value.getTemperatura()));
+                temperatura.setText(String.valueOf(temperatura_value.getTemperatura())+" ºC");
             }
             if(arca != null){
-                arca.setText(String.valueOf(temperatura_value.getArca_frigorifica_id()));
+                arca.setText(String.valueOf(temperatura_value.getDesignacao()));
             }
         }
         return converterView;

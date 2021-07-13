@@ -34,6 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:src="@drawable/ic_more"
+        android:onClick="SideMenu"
         app:tint="@color/main_elements">
     </ImageView>
 

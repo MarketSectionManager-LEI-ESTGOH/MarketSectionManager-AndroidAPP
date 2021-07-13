@@ -8,7 +8,9 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,6 +35,7 @@ import com.projeto.msm.model.Area;
 import com.projeto.msm.model.AreaFrigorifica;
 import com.projeto.msm.model.Capture;
 import com.projeto.msm.model.Produto;
+import com.projeto.msm.model.User;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -57,6 +60,8 @@ public class ValidadeActivity extends AppCompatActivity {
     private EditText ean_text;
     private LinearLayout layout_nome;
 
+    private User current_user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +73,8 @@ public class ValidadeActivity extends AppCompatActivity {
         produto_subtext = findViewById(R.id.produto_subtext);
         layout_nome = findViewById(R.id.linearLayout6);
         layout_nome.setVisibility(View.GONE);
+
+        current_user = (User) getIntent().getSerializableExtra("user");
 
         date =  findViewById(R.id.data_validade);
         date.setInputType(InputType.TYPE_NULL);
@@ -131,7 +138,7 @@ public class ValidadeActivity extends AppCompatActivity {
                 .create();
         Retrofit retrofit = new Retrofit.Builder().baseUrl(APICall.Base_URL).addConverterFactory(ScalarsConverterFactory.create()).addConverterFactory(GsonConverterFactory.create(gson)).build();
         APICall apiInterface = retrofit.create(APICall.class);
-        Call<ArrayList<Produto>> call = apiInterface.getProdutoByEAN(codeContent);
+        Call<ArrayList<Produto>> call = apiInterface.getProdutoByEAN(current_user.getToken() ,codeContent);
 
         call.enqueue(new Callback<ArrayList<Produto>>() {
             @Override
@@ -154,6 +161,14 @@ public class ValidadeActivity extends AppCompatActivity {
                     }catch (Exception e){
                         e.printStackTrace();
                     }
+                }else if(response.code() == 403){
+                    current_user = null;
+                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.clear().commit();
+                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                    finish();
+                    Toast.makeText(ValidadeActivity.this, getString(R.string.scanner_dialog_error_forbidden), Toast.LENGTH_SHORT).show();
                 }else{
                     try {
                         produto.setText("");
@@ -189,7 +204,7 @@ public class ValidadeActivity extends AppCompatActivity {
                 paramObject.put("validade", String.valueOf(date.getText()));
                 Log.e("Tag", "EEEEE" + paramObject.toString());
 
-                Call<String> rastCall = apiInterface.putValidadeByProduto(paramObject.toString());
+                Call<String> rastCall = apiInterface.putValidadeByProduto(current_user.getToken(), paramObject.toString());
                 rastCall.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -207,6 +222,14 @@ public class ValidadeActivity extends AppCompatActivity {
                             }catch (Exception e){
                                 e.printStackTrace();
                             }
+                        }else if(response.code() == 403){
+                            current_user = null;
+                            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                            SharedPreferences.Editor editor = preferences.edit();
+                            editor.clear().commit();
+                            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                            finish();
+                            Toast.makeText(ValidadeActivity.this, getString(R.string.scanner_dialog_error_forbidden), Toast.LENGTH_SHORT).show();
                         }else{
                             try {
                                 Toast.makeText(ValidadeActivity.this, "Erro a guardar a informação! (EAN ou data inválida)", Toast.LENGTH_SHORT).show();
@@ -231,6 +254,18 @@ public class ValidadeActivity extends AppCompatActivity {
             Toast.makeText(ValidadeActivity.this, R.string.scanner_dialog_error, Toast.LENGTH_LONG).show();
         }
 
+    }
+
+    protected void onPause(){
+        super.onPause();
+        //Save to sharedPrefs
+        if(current_user != null){
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putInt("num_interno",current_user.getnumInterno());
+            editor.putString("password",current_user.getPassword());
+            editor.apply();
+        }
     }
 
     public void onClickVoltar(View view){

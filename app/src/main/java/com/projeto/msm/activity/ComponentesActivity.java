@@ -6,7 +6,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -45,6 +47,8 @@ public class ComponentesActivity extends AppCompatActivity {
     private Area area;
 
     DrawerLayout drawerLayout;
+    TextView userName;
+
     ListView listView;
     TextView nameView;
 
@@ -62,6 +66,9 @@ public class ComponentesActivity extends AppCompatActivity {
 
         current_user = (User) getIntent().getSerializableExtra("user");
         area = (Area) getIntent().getSerializableExtra("area");
+
+        userName = findViewById(R.id.user_name);
+        userName.setText(current_user.getName()+" - "+ current_user.getnumInterno());
 
         componenteList = new ArrayList<>();
         checkedcomponentes = new ArrayList<>();
@@ -118,7 +125,7 @@ public class ComponentesActivity extends AppCompatActivity {
                 }
                 Log.e("Tag", "EEEEE" + paramObject.toString());
 
-                Call<String> rastCall = apiInterface.putLimpezaComponentesArea(String.valueOf(current_user.getId()) , paramObject.toString());
+                Call<String> rastCall = apiInterface.putLimpezaComponentesArea(current_user.getToken(), String.valueOf(current_user.getId()) , paramObject.toString());
                 rastCall.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -128,6 +135,7 @@ public class ComponentesActivity extends AppCompatActivity {
                                 Log.e("Tag", "EEEEE" + response.body());
                                 if(!res.equalsIgnoreCase("[]")){
                                     Toast.makeText(ComponentesActivity.this, getString(R.string.registo_limpeza_dialog_ok_send), Toast.LENGTH_SHORT).show();
+                                    finish();
                                 }else{
                                     Toast.makeText(ComponentesActivity.this, getString(R.string.scanner_dialog_error_generic), Toast.LENGTH_SHORT).show();
                                 }
@@ -136,6 +144,11 @@ public class ComponentesActivity extends AppCompatActivity {
                             }catch (Exception e){
                                 e.printStackTrace();
                             }
+                        }else if(response.code() == 403){
+                            current_user = null;
+                            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                            finish();
+                            Toast.makeText(ComponentesActivity.this, getString(R.string.scanner_dialog_error_forbidden), Toast.LENGTH_SHORT).show();
                         }else{
                             try {
                                 Toast.makeText(ComponentesActivity.this, getString(R.string.scanner_dialog_error_generic), Toast.LENGTH_SHORT).show();
@@ -164,7 +177,7 @@ public class ComponentesActivity extends AppCompatActivity {
         Retrofit retrofit = new Retrofit.Builder().baseUrl(APICall.Base_URL).addConverterFactory(ScalarsConverterFactory.create()).addConverterFactory(GsonConverterFactory.create(gson)).build();
         APICall apiInterface = retrofit.create(APICall.class);
 
-        Call<ArrayList<Componente>> call = apiInterface.getComponentesArea(String.valueOf(area_num));
+        Call<ArrayList<Componente>> call = apiInterface.getComponentesArea(current_user.getToken(), String.valueOf(area_num));
         call.enqueue(new Callback<ArrayList<Componente>>() {
             @Override
             public void onResponse(Call<ArrayList<Componente>> call, Response<ArrayList<Componente>> response) {
@@ -172,7 +185,7 @@ public class ComponentesActivity extends AppCompatActivity {
                     try{
                         componenteList = new ArrayList<>();
                         componenteList = response.body();
-
+                        Log.e("Tag", "Array->: " + componenteList.toString());
                         /*
                         ArrayList<String> comp_names = new ArrayList<>();
                         if(componenteList.size() > 0){
@@ -214,9 +227,17 @@ public class ComponentesActivity extends AppCompatActivity {
                     }catch (Exception e){
                         e.printStackTrace();
                     }
+                }else if(response.code() == 403){
+                    current_user = null;
+                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.clear().commit();
+                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                    finish();
+                    Toast.makeText(ComponentesActivity.this, getString(R.string.scanner_dialog_error_forbidden), Toast.LENGTH_SHORT).show();
                 }else{
                     try {
-                        //Toast.makeText(MainActivity.this, getString(R.string.scanner_dialog_error_generic), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ComponentesActivity.this, getString(R.string.scanner_dialog_error_server), Toast.LENGTH_SHORT).show();
                         Log.e("Tag", "error1");
                     } catch (Exception e) {
                         Log.e("Tag", "error2" + e);
@@ -239,6 +260,8 @@ public class ComponentesActivity extends AppCompatActivity {
     public void ClickMenu(View view){
         openDrawer(drawerLayout);
     }
+
+    public void SideMenu(View view){ }
 
     public static void openDrawer(DrawerLayout drawerLayout){
         drawerLayout.openDrawer(GravityCompat.START);
@@ -273,6 +296,9 @@ public class ComponentesActivity extends AppCompatActivity {
     public void ClickLogout(View view){
         current_user = null;
         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.clear().commit();
         finish();
     }
 
@@ -280,5 +306,13 @@ public class ComponentesActivity extends AppCompatActivity {
     protected void onPause(){
         super.onPause();
         closeDrawer(drawerLayout);
+        //Save to sharedPrefs
+        if(current_user != null){
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putInt("num_interno",current_user.getnumInterno());
+            editor.putString("password",current_user.getPassword());
+            editor.apply();
+        }
     }
 }

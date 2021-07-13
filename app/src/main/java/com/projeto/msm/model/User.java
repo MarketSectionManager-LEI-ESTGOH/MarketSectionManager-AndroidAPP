@@ -7,7 +7,7 @@ public class User implements Serializable {
     private String email, nome;
     private int num_interno;
     private int tipo;
-    //private BigInteger id;
+    private String token;
     private String password;
     private int id;
 
@@ -18,6 +18,7 @@ public class User implements Serializable {
         this.tipo = -1;
         this.nome = null;
         this.password = null;
+        this.token = null;
     }
 
     public User(int id, String email, String nome, int num_interno, int tipo){
@@ -60,11 +61,20 @@ public class User implements Serializable {
         this.password = password;
     }
 
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "email='" + email + '\'' +
                 ", nome='" + nome + '\'' +
+                ", token='" + token + '\'' +
                 ", num_interno=" + num_interno +
                 ", tipo=" + tipo +
                 ", password='" + password + '\'' +

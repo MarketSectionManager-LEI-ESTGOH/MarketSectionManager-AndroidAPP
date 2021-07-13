@@ -9,8 +9,10 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.Image;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -122,6 +124,9 @@ public class MainActivityAdmin extends AppCompatActivity {
     public void ClickLogout(View view){
         current_user = null;
         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.clear().commit();
         finish();
     }
 
@@ -222,7 +227,7 @@ public class MainActivityAdmin extends AppCompatActivity {
             paramObject.put("tem_min", String.valueOf(areaFrigorifica.getTem_max()));
             paramObject.put("tem_max", String.valueOf(areaFrigorifica.getTem_max()));
 
-            Call<String> frigCall = apiInterface.areafrig(paramObject.toString());
+            Call<String> frigCall = apiInterface.areafrig(current_user.getToken(), paramObject.toString());
             frigCall.enqueue(new Callback<String>() {
                 @Override
                 public void onResponse(Call<String> call, Response<String> response) {
@@ -235,6 +240,11 @@ public class MainActivityAdmin extends AppCompatActivity {
                         }catch (Exception e){
                             e.printStackTrace();
                         }
+                    }else if(response.code() == 403){
+                        current_user = null;
+                        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                        finish();
+                        Toast.makeText(MainActivityAdmin.this, getString(R.string.scanner_dialog_error_forbidden), Toast.LENGTH_SHORT).show();
                     }else{
                         try {
                             Toast.makeText(MainActivityAdmin.this, getString(R.string.scanner_dialog_error_generic), Toast.LENGTH_SHORT).show();

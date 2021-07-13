@@ -16,9 +16,12 @@
     <string name="scanner_dialog_cancel">Cancelar</string>
     <string name="scanner_dialog_error">Campos em falta!</string>
     <string name="scanner_dialog_error_send">Erro a enviar para o servidor!</string>
+    <string name="scanner_dialog_error_server">Erro no servidor!</string>
     <string name="scanner_dialog_error_generic">Erro a guardar a informação!</string>
     <string name="scanner_dialog_error_no_componetes">Não foi selecionado nenhum componente!</string>
     <string name="scanner_dialog_ok_send">Area frigorífica adicionada</string>
+
+    <string name="scanner_dialog_error_forbidden">Credenciais de login expiradas!</string>
 
     <string name="registo_addTemp">Adicionar registo de temperatura</string>
     <string name="registo_addTemp_title">Adicionar novo registo:</string>
@@ -27,7 +30,7 @@
     <string name="registo_dialog_ok_send">Temperatura registada com sucesso</string>
     <string name="registo_dialog_ok_send_rastreabilidade">Rastreabilidade registada com sucesso</string>
 
-    <string name="registo__main_addlimpezaArca">Registo de Limpeza</string>
+    <string name="registo__main_addlimpezaArca">Registo de Limpeza de Arcas</string>
     <string name="registo_addlimpezaArca">Adicionar registo de limpeza</string>
     <string name="registo_addrastreabilidade">Adicionar registo de rastreabilidade</string>
     <string name="registo__main_addrastreabilidade">Registo de Rastreabilidade</string>
@@ -46,4 +49,12 @@
     <string name="componente_data">Última</string>
     <string name="componente_nome">Designação</string>
     <string name="componente_check">Limpo</string>
+
+    <string-array name="user_options_array">
+        <item>Últimos Registos de Temperatura</item>
+        <item>Últimos Registos de Limpeza de Componentes</item>
+        <item>Últimos Registos de Rastreabilidade</item>
+    </string-array>
+
+
 </resources>
