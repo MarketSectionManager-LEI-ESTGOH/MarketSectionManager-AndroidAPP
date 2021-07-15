@@ -90,7 +90,8 @@ public class ValidadeActivity extends AppCompatActivity {
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                                date.setText(year + "-" + month+1 + "-" + dayOfMonth);
+                                month++;
+                                date.setText(year + "-" + month + "-" + dayOfMonth);
                             }
                         }, year, month, mDay);
                 picker.show();
